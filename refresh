@@ -1,0 +1,8 @@
+uic ./UI/mainwindow.ui  -o ui_mainwindow.h
+uic ./UI/about.ui -o ui_about.h
+qmake
+rm  ./HAO-Viewer
+make -j8
+./HAO-Viewer
+
+

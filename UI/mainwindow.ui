@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1142</width>
+    <height>769</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>休克尔分子轨道(HMO-SXNU)</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="1">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_3d">
+       <attribute name="title">
+        <string>3D模型</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="View3D" name="view3d"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_coordinate">
+       <attribute name="title">
+        <string>原子坐标</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QFrame" name="frame">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="CodeEditor" name="textEdit_dataMol">
+             <property name="frameShape">
+              <enum>QFrame::Box</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="minimumSize">
+       <size>
+        <width>278</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>230</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_1">
+       <attribute name="title">
+        <string>构建分子</string>
+       </attribute>
+       <widget class="TemplateView3d" name="openGLWidget_template">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>150</y>
+          <width>261</width>
+          <height>231</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="frame_21" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>390</y>
+          <width>250</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_12">
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_32">
+           <property name="font">
+            <font>
+             <family>Noto Sans CJK SC</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Y</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_30">
+           <property name="font">
+            <font>
+             <family>Noto Sans CJK SC</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Z</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="lineEdit_Y">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Cantarell</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QPushButton" name="pushButton_translate">
+           <property name="font">
+            <font>
+             <family>Noto Sans CJK SC</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>平移</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pushButton_cleardata">
+           <property name="font">
+            <font>
+             <family>Noto Sans CJK SC</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>清空</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <widget class="QPushButton" name="pushButton_rotate">
+           <property name="font">
+            <font>
+             <family>Sans Serif</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>旋转</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit_X">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Cantarell</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="maxLength">
+            <number>32</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLineEdit" name="lineEdit_Z">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Cantarell</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_31">
+           <property name="font">
+            <font>
+             <family>Noto Sans CJK SC</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>X</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QFrame" name="frame">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>254</width>
+          <height>151</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_15">
+         <item row="2" column="1">
+          <widget class="QPushButton" name="pushButton_addHydrogen">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>加氢</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pushButton_clean">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>MMFF94</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="checkBox_kekule">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Kekule</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButton_GAFF">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>GAFF</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="pushButton_Ghemical">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Ghemical</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pushButton_UFF">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>UFF</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="pushButton_bond">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>键长</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="pushButton_angle">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>键角</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="pushButton_pencil">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>铅笔</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QPushButton" name="pushButton_hedral">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>二面角</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="pushButton_rebond">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>重新键连</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QPushButton" name="pushButton_templateMol">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>分子模板</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Huckel</string>
+       </attribute>
+       <widget class="QFrame" name="frame_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>277</width>
+          <height>598</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QTableView" name="huckelEnergyView"/>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_9">
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="checkBox_hideNode">
+                <property name="text">
+                 <string>轨道节面</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QCheckBox" name="checkBox_hideHuckelOrbital">
+                <property name="text">
+                 <string>隐藏轨道</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QCheckBox" name="checkBox_negLobe">
+                <property name="text">
+                 <string>轨道负瓣(-)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QPushButton" name="pushButton_calcExtendedHuckel">
+                <property name="text">
+                 <string>扩展HMO法</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QCheckBox" name="checkBox_MOType">
+                <property name="text">
+                 <string>分子轨道型</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="checkBox_posLobe">
+                <property name="text">
+                 <string>轨道正瓣(+)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="checkBox_mesh">
+                <property name="text">
+                 <string>网格(Mesh)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="checkBox_AOType">
+                <property name="text">
+                 <string>原子轨道型</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QCheckBox" name="checkBox_surface">
+                <property name="text">
+                 <string>曲面(Surface)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QPushButton" name="pushButton_calcHuckel">
+                <property name="text">
+                 <string>HMO法</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0" colspan="2">
+               <widget class="QSlider" name="horizontalSlider">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_16">
+               <item row="1" column="1">
+                <widget class="QDial" name="dialAtomScale">
+                 <property name="maximum">
+                  <number>200</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>5</number>
+                 </property>
+                 <property name="pageStep">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>100</number>
+                 </property>
+                 <property name="view_option_name" stdset="0">
+                  <string>atom_scale</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QPushButton" name="pushButton_Bond">
+                 <property name="text">
+                  <string>键</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QPushButton" name="pushButton_Atom">
+                 <property name="text">
+                  <string>原子</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QDial" name="dialBondScale">
+                 <property name="maximum">
+                  <number>200</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>5</number>
+                 </property>
+                 <property name="pageStep">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>100</number>
+                 </property>
+                 <property name="view_option_name" stdset="0">
+                  <string>bond_scale</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <widget class="QPushButton" name="pushButton_Ring">
+                 <property name="text">
+                  <string>圆环</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QPushButton" name="pushButton_colorOrbital">
+                 <property name="text">
+                  <string>轨道颜色</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+   <zorder>tabWidget_2</zorder>
+   <zorder>tabWidget</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1142</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="actionFileNew"/>
+    <addaction name="actionFileOpen"/>
+    <addaction name="actionFileClose"/>
+    <addaction name="actionFileSave2PNG"/>
+    <addaction name="actionFileExport"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>视图</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionReset"/>
+    <addaction name="actionXOY"/>
+    <addaction name="actionXOZ"/>
+    <addaction name="actionYOZ"/>
+    <addaction name="actionLabel"/>
+   </widget>
+   <widget class="QMenu" name="menuwindows">
+    <property name="title">
+     <string>窗口</string>
+    </property>
+    <addaction name="actionCascade"/>
+    <addaction name="actionTitles"/>
+   </widget>
+   <widget class="QMenu" name="menuToosBar">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <widget class="QMenu" name="menu">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>调整键级</string>
+     </property>
+     <addaction name="actionSingleBond"/>
+     <addaction name="actionDoubleBond"/>
+     <addaction name="actionTripleBond"/>
+     <addaction name="actionQuadrupleBond"/>
+     <addaction name="actionAromaticBond"/>
+     <addaction name="actionWeakBond"/>
+    </widget>
+    <widget class="QMenu" name="menuMM">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>MM 几何优化</string>
+     </property>
+     <addaction name="actionUFF"/>
+     <addaction name="actionMMFF94"/>
+     <addaction name="actionGhemical"/>
+     <addaction name="actionGaff"/>
+     <addaction name="actionMM2"/>
+    </widget>
+    <addaction name="menuMM"/>
+    <addaction name="menu"/>
+    <addaction name="actionToolsAddHydrogenAuto"/>
+    <addaction name="actionreCalculateBonds"/>
+    <addaction name="actionPeriodicTable"/>
+    <addaction name="actionToolscentralize"/>
+    <addaction name="actionToolsPencil"/>
+    <addaction name="actionToolsRotate"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="action_about"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+    <addaction name="actionEditUndo"/>
+    <addaction name="actionEditRedo"/>
+    <addaction name="actionEditCut"/>
+    <addaction name="actionEditCopy"/>
+    <addaction name="actionEditPaste"/>
+    <addaction name="actionEditbond"/>
+    <addaction name="actionEditangle"/>
+    <addaction name="actionEditdihedral"/>
+    <addaction name="actionAddHydrogen"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuToosBar"/>
+   <addaction name="menuwindows"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionFileOpen"/>
+   <addaction name="actionFileNew"/>
+   <addaction name="actionEditUndo"/>
+   <addaction name="actionEditRedo"/>
+   <addaction name="actionEditCut"/>
+   <addaction name="actionEditCopy"/>
+   <addaction name="actionEditPaste"/>
+   <addaction name="separator"/>
+   <addaction name="separator"/>
+   <addaction name="actionSingleBond"/>
+   <addaction name="actionAromaticBond"/>
+   <addaction name="actionDoubleBond"/>
+   <addaction name="actionTripleBond"/>
+   <addaction name="actionWeakBond"/>
+   <addaction name="separator"/>
+   <addaction name="actionReset"/>
+   <addaction name="actionToolscentralize"/>
+   <addaction name="actionxyz"/>
+   <addaction name="actionXOY"/>
+   <addaction name="actionXOZ"/>
+   <addaction name="actionYOZ"/>
+   <addaction name="actionXTB_optimize"/>
+   <addaction name="actionToolsRotate"/>
+   <addaction name="actionToolsPencil"/>
+   <addaction name="actionToolsAddHydrogenAuto"/>
+   <addaction name="actionPeriodicTable"/>
+  </widget>
+  <action name="actionSave_as">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/copy.png</normaloff>../images/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="actionAlignView_Xy">
+   <property name="text">
+    <string>Align to x/y</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>DejaVu Sans</family>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionAlignView_Xz">
+   <property name="text">
+    <string>Align to x/z</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>DejaVu Sans</family>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionAlignView_Yz">
+   <property name="text">
+    <string>Align to y/z</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>DejaVu Sans</family>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>DejaVu Sans</family>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionSave_Png">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/picture.png</normaloff>:/images/picture.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save Png</string>
+   </property>
+  </action>
+  <action name="actionCascade">
+   <property name="text">
+    <string>Cascade</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionTitles">
+   <property name="text">
+    <string>Titles</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionFileOpen">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/fileOpen.png</normaloff>:/images/fileOpen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionFileClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="actionBuilderShow">
+   <property name="text">
+    <string>Builder</string>
+   </property>
+  </action>
+  <action name="actionFileNew">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/fileNew.png</normaloff>:/images/fileNew.png</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionFileSave2PNG">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/picture.png</normaloff>:/images/picture.png</iconset>
+   </property>
+   <property name="text">
+    <string>png图片</string>
+   </property>
+  </action>
+  <action name="actionChangeColor">
+   <property name="text">
+    <string>ChangeColor</string>
+   </property>
+  </action>
+  <action name="actionEditUndo">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/editUndo.png</normaloff>:/images/editUndo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEditRedo">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/editRedo.png</normaloff>:/images/editRedo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionAddHydrogen">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/AddHydrogens.ico</normaloff>:/images/AddHydrogens.ico</iconset>
+   </property>
+   <property name="text">
+    <string>加氢</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionXTB_optimize">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/UFF.png</normaloff>:/images/UFF.png</iconset>
+   </property>
+   <property name="text">
+    <string>XTB 几何优化</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/reset.png</normaloff>:/images/reset.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionXOY">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/xoy.png</normaloff>:/images/xoy.png</iconset>
+   </property>
+   <property name="text">
+    <string>XOY</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionXOZ">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/xoz.png</normaloff>:/images/xoz.png</iconset>
+   </property>
+   <property name="text">
+    <string>XOZ</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionYOZ">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/yoz.png</normaloff>:/images/yoz.png</iconset>
+   </property>
+   <property name="text">
+    <string>YOZ</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>点群元素</string>
+   </property>
+  </action>
+  <action name="actionSingleBond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/singlebond.svg</normaloff>:/images/singlebond.svg</iconset>
+   </property>
+   <property name="text">
+    <string>single</string>
+   </property>
+  </action>
+  <action name="actionDoubleBond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/doublebond.svg</normaloff>:/images/doublebond.svg</iconset>
+   </property>
+   <property name="text">
+    <string>double</string>
+   </property>
+  </action>
+  <action name="actionTripleBond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/triplebond.svg</normaloff>:/images/triplebond.svg</iconset>
+   </property>
+   <property name="text">
+    <string>triple</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="text">
+    <string>作者</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionSymmetryView">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/symmetry.png</normaloff>:/images/symmetry.png</iconset>
+   </property>
+   <property name="text">
+    <string>对称元素</string>
+   </property>
+  </action>
+  <action name="actionEditbond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/bond.png</normaloff>:/images/bond.png</iconset>
+   </property>
+   <property name="text">
+    <string>改变键长</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEditangle">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/angle.png</normaloff>:/images/angle.png</iconset>
+   </property>
+   <property name="text">
+    <string>改变键角</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEditdihedral">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/dihedral.png</normaloff>:/images/dihedral.png</iconset>
+   </property>
+   <property name="text">
+    <string>二面角</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionToolscentralize">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/center.png</normaloff>:/images/center.png</iconset>
+   </property>
+   <property name="text">
+    <string>分子居中</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEditPaste">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/editPaste.png</normaloff>:/images/editPaste.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEditCut">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/cut.png</normaloff>:/images/cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionFileExport">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/fileSave.png</normaloff>:/images/fileSave.png</iconset>
+   </property>
+   <property name="text">
+    <string>存盘</string>
+   </property>
+  </action>
+  <action name="actionQuadrupleBond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/quadruplebond.svg</normaloff>:/images/quadruplebond.svg</iconset>
+   </property>
+   <property name="text">
+    <string>quadruple</string>
+   </property>
+  </action>
+  <action name="actionAromaticBond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/aromaticbond.svg</normaloff>:/images/aromaticbond.svg</iconset>
+   </property>
+   <property name="text">
+    <string>aromatic</string>
+   </property>
+  </action>
+  <action name="actionWeakBond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/weakbond.svg</normaloff>:/images/weakbond.svg</iconset>
+   </property>
+   <property name="text">
+    <string>weak</string>
+   </property>
+  </action>
+  <action name="actionHydrogenbond">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/line.png</normaloff>:/images/line.png</iconset>
+   </property>
+   <property name="text">
+    <string>hydrogen</string>
+   </property>
+  </action>
+  <action name="actionToolsAddHydrogenAuto">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/AddHydrogens.ico</normaloff>:/images/AddHydrogens.ico</iconset>
+   </property>
+   <property name="text">
+    <string>自动加氢</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionMMFF94">
+   <property name="text">
+    <string>MMFF94</string>
+   </property>
+  </action>
+  <action name="actionGhemical">
+   <property name="text">
+    <string>Ghemical</string>
+   </property>
+  </action>
+  <action name="actionGaff">
+   <property name="text">
+    <string>Gaff</string>
+   </property>
+  </action>
+  <action name="actionMM2">
+   <property name="text">
+    <string>MM2</string>
+   </property>
+  </action>
+  <action name="actionUFF">
+   <property name="text">
+    <string>UFF</string>
+   </property>
+  </action>
+  <action name="actionreCalculateBonds">
+   <property name="text">
+    <string>重新计算化学键</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionPeriodicTable">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/periodicTabel.png</normaloff>:/images/periodicTabel.png</iconset>
+   </property>
+   <property name="text">
+    <string>元素周期表</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionToolsPencil">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/draw.png</normaloff>:/images/draw.png</iconset>
+   </property>
+   <property name="text">
+    <string>铅笔</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionToolsSelect">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/select.png</normaloff>:/images/select.png</iconset>
+   </property>
+   <property name="text">
+    <string>选择模式</string>
+   </property>
+  </action>
+  <action name="actionToolsRotate">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/rotate.png</normaloff>:/images/rotate.png</iconset>
+   </property>
+   <property name="text">
+    <string>旋转模式</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEditCopy">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/copy.png</normaloff>:/images/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionxyz">
+   <property name="icon">
+    <iconset resource="../hmo.qrc">
+     <normaloff>:/images/axis.png</normaloff>:/images/axis.png</iconset>
+   </property>
+   <property name="text">
+    <string>坐标轴</string>
+   </property>
+  </action>
+  <action name="actionLabel">
+   <property name="text">
+    <string>Label</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TemplateView3d</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">templateView3d.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QTextEdit</extends>
+   <header location="global">codeEditor.h</header>
+  </customwidget>
+  <customwidget>
+   <class>View3D</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">View3D.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>lineEdit_Z</tabstop>
+  <tabstop>pushButton_translate</tabstop>
+  <tabstop>lineEdit_Y</tabstop>
+  <tabstop>lineEdit_X</tabstop>
+  <tabstop>pushButton_rotate</tabstop>
+  <tabstop>pushButton_cleardata</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../hmo.qrc"/>
+ </resources>
+ <connections/>
+</ui>

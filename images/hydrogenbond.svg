@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="115.54 150.3 30.24 31.21"
+   preserveAspectRatio="xMidYMid"
+   width="100%"
+   height="100%"
+   version="1.1"
+   id="svg28"
+   sodipodi:docname="hydrogenbond.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata34">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs32" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="852"
+     inkscape:window-height="648"
+     id="namedview30"
+     showgrid="false"
+     inkscape:zoom="7.5616789"
+     inkscape:cx="15.12"
+     inkscape:cy="15.605"
+     inkscape:window-x="70"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg28" />
+  <clipPath
+     id="84">
+    <rect
+       x="0.5"
+       y="0.5"
+       width="522.2"
+       height="768.8"
+       id="rect2" />
+  </clipPath>
+  <g
+     id="drawing"
+     transform="matrix(1.3673493,0,0,1.2754237,-50.907273,-45.892544)">
+    <rect
+       x="115.54"
+       y="150.3"
+       width="100%"
+       height="100%"
+       id="rect5"
+       style="fill:#ffffff" />
+    <g
+       id="page"
+       clip-path="url(#84)">
+      <g
+         id="g11">
+        <text
+           xml:space="preserve"
+           id="text9"
+           style="text-anchor:start;text-rendering:geometricPrecision"><tspan
+             x="115.54"
+             y="160.45"
+             font-weight="bold"
+             font-size="12"
+             id="tspan7"
+             style="font-weight:bold;font-size:12px;font-family:Arial;fill:#000000">O</tspan></text>
+      </g>
+      <g
+         id="g17">
+        <text
+           xml:space="preserve"
+           id="text15"
+           style="text-anchor:start;text-rendering:geometricPrecision"><tspan
+             x="137.13"
+             y="181.50999"
+             font-weight="bold"
+             font-size="12"
+             id="tspan13"
+             style="font-weight:bold;font-size:12px;font-family:Arial;fill:#000000">H</tspan></text>
+      </g>
+      <g
+         id="Dash">
+        <path
+           d="m 126.52,164.1 v 0 l 1.81,-1.8 -1.91,-1.91 -0.91,0.9 -0.9,0.9 z"
+           id="path19"
+           inkscape:connector-curvature="0"
+           style="fill:#0000ff;fill-rule:evenodd;stroke:#0000ff;stroke-width:0;stroke-linejoin:miter;shape-rendering:geometricPrecision" />
+        <path
+           d="m 133.87,171.45 v 0 l 1.81,-1.8 1.91,1.91 -0.9,0.9 -0.91,0.9 z"
+           id="path21"
+           inkscape:connector-curvature="0"
+           style="fill:#0000ff;fill-rule:evenodd;stroke:#0000ff;stroke-width:0;stroke-linejoin:miter;shape-rendering:geometricPrecision" />
+        <path
+           d="m 129.24,166.82 v 0 l 1.91,1.91 1.81,-1.8 -1.91,-1.91 z"
+           id="path23"
+           inkscape:connector-curvature="0"
+           style="fill:#0000ff;fill-rule:evenodd;stroke:#0000ff;stroke-width:0;stroke-linejoin:miter;shape-rendering:geometricPrecision" />
+      </g>
+    </g>
+  </g>
+</svg>
