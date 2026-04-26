@@ -4,6 +4,7 @@
 #include <vtkSphereSource.h>
 #include <vtkImageData.h>
 #include <vtkMarchingCubes.h>
+#include <vtkFlyingEdges3D.h>
 
 #include <iostream>
 
@@ -250,13 +251,12 @@ void HMO::runHuckel()
     if (numCarbonAtoms<2) return;
 
 
-
     DDMatrix Huckel(numCarbonAtoms,numCarbonAtoms,0.0);
 
     //omp_set_num_threads(4);
-    for(int i=0;i<numCarbonAtoms;i++)
+    for(size_t i=0;i<numCarbonAtoms;i++)
     {
-        for(int j=i+1;j<numCarbonAtoms;j++)
+        for(size_t j=i+1;j<numCarbonAtoms;j++)
         {
             if(mol->getAtombyIndex(huckelCarbonList[i])->isLinkded(huckelCarbonList[j]))
             {
@@ -280,14 +280,14 @@ void HMO::runHuckel()
 
     huckelEigValues.clear();
     huckelEigVecs.clear();
-    for(int i=0;i<numCarbonAtoms;i++)
+    for(size_t i=0;i<numCarbonAtoms;i++)
     {
-        //energy of huckel
-        huckelEigValues.push_back(eigenvals(0,i));
+        //energy of huckel (x = -eigenvalue of adjacency matrix)
+        huckelEigValues.push_back(-eigenvals(0,i));
 
         //coefficient of orbital
         v.clear();
-        for(int j=0;j<numCarbonAtoms;j++)
+        for(size_t j=0;j<numCarbonAtoms;j++)
             v.push_back(eigenvecs(j,i));
 
         huckelEigVecs.push_back(v);
@@ -321,7 +321,6 @@ void HMO::buildYlmSurface()
     vector3 v1,v0,v;
 
     uint size=MolBasisSets.size();
-    #pragma omp parallel for
     for (uint i=0;i<size;i++)
     {
         radius=huckelEigVecs[idxActiveMO][i]*scaleAO[idxActiveMO];
@@ -331,7 +330,7 @@ void HMO::buildYlmSurface()
         if (mol->getMolShape()=="Sphere")
             v1=radius*MolBasisSets[i]->orient;
 
-        auto sphere = vtkSphereSource::New();
+        auto sphere = vtkSmartPointer<vtkSphereSource>::New();
         sphere->SetPhiResolution(20);
         sphere->SetThetaResolution(20);
         sphere->SetRadius(fabs(radius));
@@ -342,7 +341,7 @@ void HMO::buildYlmSurface()
         sphere->Update();
 
         //negative
-        auto sphere1 = vtkSphereSource::New();
+        auto sphere1 = vtkSmartPointer<vtkSphereSource>::New();
         sphere1->SetPhiResolution(20);
         sphere1->SetThetaResolution(20);
         sphere1->SetRadius(fabs(radius));
@@ -381,7 +380,7 @@ double HMO::Psi(double x, double y, double z)
 
     int numBS=MolBasisSets.size();
 
-    double Psi_2Pz;
+    //double Psi_2Pz;
     double a0=0.529177;
 
     vector3 v;
@@ -394,29 +393,23 @@ double HMO::Psi(double x, double y, double z)
     double coeff=0.0;
     double length=0.0;
 
-    #pragma omp parallel for
+    // Calculate value without spawning nested threads (which adds overhead and race condition)
     for (int i=0; i<numBS; i++)
     {
-        Z=MolBasisSets[i]->Z;
-        perfactor=0.25/sqrt(2.0*3.141592654)*pow(Z,1.5)*Z/a0;
+        coeff=huckelEigVecs[idxActiveMO][i];
+        if(abs(coeff)<0.01) continue;
 
+        Z=MolBasisSets[i]->Z;
+        
         //plane shape
         v = p - MolBasisSets[i]->coord;
-
         length=v.length();
-        //if(length>4.0) continue;
+        if (length > 8.0) continue;
 
         //spherical fullene
         if(MolBasisSets[i]->isOriented)
              v = MolBasisSets[i]->rev_rotateM*v;
 
-        Psi_2Pz=perfactor*v.z()/a0*exp(-Z*length/2.0/a0);
-        //value += huckelEigVecs[idxActiveMO][i]*Psi_2Pz;
-
-        coeff=huckelEigVecs[idxActiveMO][i];
-
-        //filter small coefficient
-        if(abs(coeff)<0.01) continue;
         value += coeff*sqrt(pow(Z,5)/3.141592654)* v.z() * exp(-Z*length);
     }
     return value;
@@ -462,12 +455,10 @@ double HMO::buildHuckelMO(int idx)
         xyzLength=mol->getVolume();
         molLength=xyzLength.length();
 
-
         //scale of AO
         scaleAO.clear();
         for(int i=0;i<MolBasisSets.size();i++)
             scaleAO.push_back(molLength);
-
 
         double shift=2.0;
         xBox=xyzLength.x()+shift;
@@ -500,24 +491,27 @@ double HMO::buildHuckelMO(int idx)
         //cout << x0<<" "<< y0<<" "<< z0<<endl;
         //cout << x0+interval*Nx<<" "<< y0+interval*Ny<<" "<< z0+interval*Nz<<endl;
 
-        auto volume = vtkImageData::New();
+        auto volume = vtkSmartPointer<vtkImageData>::New();
         volume->SetDimensions(Nx,Ny,Nz);
         volume->SetSpacing(interval, interval,interval);
         volume->AllocateScalars(VTK_DOUBLE,1);
         volume->SetOrigin(-xBox,-yBox,-zBox);
         volume->Modified();
 
-        //#pragma omp parallel for
+        double* scalarPtr = static_cast<double*>(volume->GetScalarPointer());
+
+        #pragma omp parallel for schedule(guided) collapse(2)
         for(int z=0; z < Nz;  z++)
         {
-            //#pragma omp parallel for
             for(int y=0; y < Ny;  y++)
             {
-#pragma omp parallel for
+                double pz = z0 + interval * z;
+                double py = y0 + interval * y;
+                long base = static_cast<long>(z) * Ny * Nx + static_cast<long>(y) * Nx;
                 for(int x=0; x < Nx;  x++)
                 {
-                    double psi=Psi(x0+interval*x,  y0+interval*y, z0+interval*z);
-                    static_cast<double*>(volume->GetScalarPointer(x,y,z))[0]=psi;
+                    double px = x0 + interval * x;
+                    scalarPtr[base + x] = Psi(px, py, pz);
                 }
             }
         }
@@ -529,7 +523,7 @@ double HMO::buildHuckelMO(int idx)
         //Extract Isosurface
 
         //negative
-        auto surfaceMC0 = vtkSmartPointer<vtkMarchingCubes>::New();
+        auto surfaceMC0 = vtkSmartPointer<vtkFlyingEdges3D>::New();
         surfaceMC0->SetInputData(volume);
         surfaceMC0->SetValue(0, isoValue);
 
@@ -540,7 +534,7 @@ double HMO::buildHuckelMO(int idx)
         pData->DeepCopy(surfaceMC0->GetOutput());
 
         //negative
-        auto surfaceMC1 = vtkSmartPointer<vtkMarchingCubes>::New();
+        auto surfaceMC1 = vtkSmartPointer<vtkFlyingEdges3D>::New();
         surfaceMC1->SetInputData(volume);
         surfaceMC1->SetValue(0, -isoValue);
 
@@ -659,7 +653,7 @@ void HMO::buildNodePlane()
             y0=-interval*Ny/2.0,
             z0=-interval*Nz/2.0;
 
-    auto volume = vtkImageData::New();
+    auto volume = vtkSmartPointer<vtkImageData>::New();
     volume->SetDimensions(Nx,Ny,Nz);
     volume->SetSpacing(interval, interval,interval);
     volume->AllocateScalars(VTK_DOUBLE,1);
@@ -683,7 +677,7 @@ void HMO::buildNodePlane()
     }
 
 
-    auto surfaceMC2 = vtkSmartPointer<vtkMarchingCubes>::New();
+    auto surfaceMC2 = vtkSmartPointer<vtkFlyingEdges3D>::New();
     surfaceMC2->SetInputData(volume);
     surfaceMC2->SetValue(0, 0.0);
     surfaceMC2->ComputeNormalsOn();

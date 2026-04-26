@@ -1,5 +1,5 @@
 #include "atomTemplate.h"
-#include "ui_atomTemplate.h"
+#include "ui_AtomTemplate.h"
 
 AtomTemplate::AtomTemplate(QWidget *parent) :
     QDialog(parent),

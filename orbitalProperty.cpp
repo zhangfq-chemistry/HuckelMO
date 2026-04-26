@@ -146,14 +146,16 @@ void OrbitalProperty::on_pushButton_posLobe_clicked()
                  Lobe_opacity_pos);
 
 
-    color_widgets::ColorDialog dialog;
-    dialog.setColor(color);
-    dialog.exec();
+    QColorDialog dialog(color);
+    dialog.setOption(QColorDialog::ShowAlphaChannel);
 
 
-    QColor c=dialog.color();
-    LobeColor_pos.Set(c.red(),c.green(),c.blue());
-    Lobe_opacity_pos=c.alpha();
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        QColor c=dialog.currentColor();
+        LobeColor_pos.Set(c.red(),c.green(),c.blue());
+        Lobe_opacity_pos=c.alpha();
+    }
 
 
     ui.spinBox_posLobe_red->setValue(LobeColor_pos.x());
@@ -171,14 +173,16 @@ void OrbitalProperty::on_pushButton_negLobe_clicked()
                  Lobe_opacity_neg);
 
 
-    color_widgets::ColorDialog dialog;
-    dialog.setColor(color);
-    dialog.exec();
+    QColorDialog dialog(color);
+    dialog.setOption(QColorDialog::ShowAlphaChannel);
 
 
-    QColor c=dialog.color();
-    LobeColor_neg.Set(c.red(),c.green(),c.blue());
-    Lobe_opacity_neg=c.alpha();
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        QColor c=dialog.currentColor();
+        LobeColor_neg.Set(c.red(),c.green(),c.blue());
+        Lobe_opacity_neg=c.alpha();
+    }
 
 
     ui.spinBox_negLobe_red->setValue(LobeColor_neg.x());
@@ -191,16 +195,19 @@ void OrbitalProperty::on_pushButton_negLobe_clicked()
 void OrbitalProperty::on_pushButton_Node_clicked()
 {
     QColor color(nodeColor.x(),
-                      nodeColor.y(),
-                      nodeColor.z(),
-                      nodeOpacity);
+                       nodeColor.y(),
+                       nodeColor.z(),
+                       nodeOpacity);
 
-    color_widgets::ColorDialog dialog;
-    dialog.setColor(color);  dialog.exec();
+    QColorDialog dialog(color);
+    dialog.setOption(QColorDialog::ShowAlphaChannel);
 
-    QColor c=dialog.color();
-    nodeColor.Set(c.red(),c.green(),c.blue());
-    nodeOpacity=c.alpha();
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        QColor c=dialog.currentColor();
+        nodeColor.Set(c.red(),c.green(),c.blue());
+        nodeOpacity=c.alpha();
+    }
 
     ui.spinBox_Node_red->setValue(nodeColor.x());
     ui.spinBox_Node_green->setValue(nodeColor.y());

@@ -2,6 +2,8 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 
+static const QRegularExpression RE_WHITESPACE("\\s+");
+
 TorsionProperty::TorsionProperty(QWidget *parent) :
     QDialog(parent)
 {
@@ -125,7 +127,7 @@ void TorsionProperty::setTorsion()
     vector <uint> mlist1;
 
     int m_index;
-    QStringList lines=list1_text.split(QRegExp("\\s+"));
+    QStringList lines=list1_text.split(RE_WHITESPACE);
     for (int i=0; i<lines.count(); i++) {
         m_index=lines[i].toInt()-1;
         if(m_index>=0 && m_index<10000)  mlist1.push_back(m_index);
@@ -142,7 +144,7 @@ void TorsionProperty::setTorsion()
 
     vector <uint> mlist2;
     lines.clear();
-    lines=list2_text.split(QRegExp("\\s+"));
+    lines=list2_text.split(RE_WHITESPACE);
     for (int i=0; i<lines.count(); i++) {
         m_index=lines[i].toInt()-1;
         if(m_index>=0 && m_index<10000)  mlist2.push_back(m_index);

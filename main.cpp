@@ -53,7 +53,7 @@
 #include <QCommandLineOption>
 
 #include "mainwindow.h"
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <QVTKOpenGLWindow.h>
 #include <vtkAutoInit.h>
 #include <vtkCamera.h>
@@ -63,7 +63,7 @@
 #include <vtkDataSetMapper.h>
 
 #include <vtkDataSetMapper.h>
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkDataSet.h>
@@ -84,11 +84,10 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    QPixmap pixmap(":/images/splash.jpg");
-    QSplashScreen splash(pixmap,Qt::WindowStaysOnTopHint);
-    splash.show();
-
-    QTimer::singleShot(3000,&splash,&QWidget::close);
+    //QPixmap pixmap(":/images/splash.jpg");
+    //QSplashScreen splash(pixmap,Qt::WindowStaysOnTopHint);
+    //splash.show();
+   // QTimer::singleShot(3000,&splash,&QWidget::close);
 
     QCoreApplication::setApplicationName("QHuckelOrbital");
     QCoreApplication::setOrganizationName("Shanxi Normal University");
@@ -102,7 +101,7 @@ int main(int argc, char *argv[])
    // parser.process(app);
 
 
-    QSurfaceFormat::setDefaultFormat(QVTKOpenGLWidget::defaultFormat());
+    QSurfaceFormat::setDefaultFormat(QVTKOpenGLNativeWidget::defaultFormat());
     vtkOpenGLRenderWindow::SetGlobalMaximumNumberOfMultiSamples(8);
 
     MainWindow mainWin;

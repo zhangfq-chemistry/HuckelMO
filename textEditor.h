@@ -60,7 +60,6 @@ class TextEditor: public QTextEdit
 public:
     explicit TextEditor (QWidget *parent = 0);
 
-
     void newFile();
     bool loadFile(const QString &fileName);
     bool save();

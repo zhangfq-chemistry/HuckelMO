@@ -22,6 +22,7 @@ struct HBasisSets
     matrix3x3 rotateM,rev_rotateM; //for sphere molecule
 };
 
+
 struct polyDataOrbitalMO
 {
     int idx;                //orbital index
@@ -37,6 +38,7 @@ struct polyDataOrbitalAO
     vtkPolyData * negYlmData;   //negative AO
     double scale;
 };
+
 
 class HMO
 {

@@ -1,9 +1,13 @@
 
 #include <QtWidgets>
+#include <QRegularExpression>
 
 #include "mainwindow.h"
 #include "math/vector3.h"
 #include "aboutDialog.h"
+
+static const QRegularExpression RE_WHITESPACE("\\s+");
+static const QRegularExpression RE_WHITESPACE_SINGLE("\\s");
 
 
 #include <vtkCamera.h>
@@ -11,7 +15,7 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkProperty.h>
 #include <vtkDataSetMapper.h>
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkDataSet.h>
@@ -41,7 +45,6 @@
 #include "EHMO.h"
 #include "math/symmetry.h"
 
-#include "boost/algorithm/algorithm.hpp"
 
 #include "periodicTable.h"
 
@@ -66,13 +69,15 @@
 
 #include "codeEditor.h"
 
-#include "displayTextForm.h"
+#include "huckelTextForm.h"
 #include "orbitalProperty.h"
 
 
 MainWindow::MainWindow(): mdiArea(new QMdiArea)
 {
     ui.setupUi (this);
+
+    statusBar()->showMessage("Ready");
 
     ui.view3d->mainWindow=this;
     view3d=ui.view3d;
@@ -83,7 +88,7 @@ MainWindow::MainWindow(): mdiArea(new QMdiArea)
     ui.view3d->setTemplateView3d(ui.openGLWidget_template);
     ui.openGLWidget_template->setMainWindow(this);
 
-    ui.openGLWidget_template->setStyleSheet("#frame{border:2px solid #014F84}#background-color:#00d8ff");
+    ui.openGLWidget_template->setStyleSheet("#frame{border:2px solid #014F84; background-color:#00d8ff}");
 
 
     mol = new HMol(this);
@@ -91,9 +96,6 @@ MainWindow::MainWindow(): mdiArea(new QMdiArea)
 
     //ui.mdiArea->tileSubWindows();
     ui.view3d->showMaximized();
-
-
-
 
 
     ui.textEdit_dataMol->setParent(this);
@@ -160,13 +162,13 @@ MainWindow::MainWindow(): mdiArea(new QMdiArea)
 
     ui.tabWidget->setCurrentIndex(0);
     ui.tabWidget_2->setCurrentIndex(0);
+
 }
 
 
 
 void MainWindow::onTextEditPaste()
 {
-
 
 }
 
@@ -273,7 +275,6 @@ void MainWindow::on_actionFileNew_triggered()
     undoList.clear();
     redoList.clear();
 
-
     mol->clearAll();
     if(hmo) hmo->clearAll();
     if(ehmo) ehmo->clearAll();
@@ -354,6 +355,9 @@ void MainWindow::saveFile(QString filename)
 {
 
 }
+
+
+
 
 
 void MainWindow::on_actionFileSave2PNG_triggered()
@@ -474,7 +478,7 @@ void MainWindow::on_pushButton_addHydrogen_clicked()
     uint numAtoms=mol->NumAtoms();
     if (numAtoms<1)
     {
-        QMessageBox::warning(this, "Warning","Empty molecue!");
+        QMessageBox::warning(this, "Warning","Empty molecule!");
         return;
     }
 
@@ -660,8 +664,11 @@ void MainWindow::buildMolData ()
 
     for (uint i=0;i<mol->NumAtoms();i++)
     {
-        s.sprintf("%3s     %10.6f     %10.6f    %10.6f\n",mol->atomSymbol(i).toStdString().c_str(),
-                  mol->atomPos(i).x(),mol->atomPos(i).y(),mol->atomPos(i).z());
+        s = QString("%1     %2     %3    %4\n")
+            .arg(mol->atomSymbol(i))
+            .arg(mol->atomPos(i).x(), 10, 'f', 6)
+            .arg(mol->atomPos(i).y(), 10, 'f', 6)
+            .arg(mol->atomPos(i).z(), 10, 'f', 6);
         dataMol0+=s;
 
         QString a=mol->atomSymbol(i) + "    "
@@ -843,9 +850,9 @@ void MainWindow::recoverStackData (QString & All)
         // atoms ---------------------------------------
         // Symbol x     y    z   radius  color neighbors;
         // C   0.0  0.0  0.0  0.3  uint32_t  1 2 3 4
-        if (single.contains("Atoms") )
-        {
-            ls = single.trimmed().split(QRegExp("\\s+"));
+         if (single.contains("Atoms") )
+         {
+             ls = single.trimmed().split(RE_WHITESPACE);
             nAtoms=ls[1].toInt();
 
             if(nAtoms<1) return;
@@ -861,11 +868,15 @@ void MainWindow::recoverStackData (QString & All)
                 single = Lines.at(i);
                 //single.replace(":", " ");
                 //cout <<single .toStdString().c_str()<< "    sssssssssssss"<< endl;
-                ls = single.trimmed().split(QRegExp("\\s+"));
+                ls = single.trimmed().split(RE_WHITESPACE);
 
                 x=ls[1].toDouble();  y=ls[2].toDouble();  z=ls[3].toDouble();
 
-                s.sprintf("%3s     %10.6f     %10.6f    %10.6f\n",ls[0].toStdString().c_str(), x,y,z);
+                s = QString("%1     %2     %3    %4\n")
+                    .arg(ls[0])
+                    .arg(x, 10, 'f', 6)
+                    .arg(y, 10, 'f', 6)
+                    .arg(z, 10, 'f', 6);
                 dataMol0+=s;
 
                 mol->addAtom(ls[0],x,y,z);
@@ -892,9 +903,9 @@ void MainWindow::recoverStackData (QString & All)
 
         //beg end order plane ringId
         uint nBonds0=0;
-        if (single.contains("Bonds"))
-        {
-            ls = single.trimmed().split(QRegExp("\\s+"));
+         if (single.contains("Bonds"))
+         {
+             ls = single.trimmed().split(RE_WHITESPACE);
             nBonds=ls[1].toInt();
             if(nBonds<1) return;
 
@@ -907,7 +918,7 @@ void MainWindow::recoverStackData (QString & All)
                 i=i+1;
                 single = Lines.at(i);
                 //cout <<single .toStdString().c_str()<<endl;
-                ls = single.trimmed().split(QRegExp("\\s+"));
+                ls = single.trimmed().split(RE_WHITESPACE);
                 mol->addBond(ls[0].toInt(),ls[1].toInt(),ls[2].toInt());
                 mol->getLastBond()->setPlane(ls[3].toDouble(),ls[4].toDouble(),ls[5].toDouble());
                 mol->getLastBond()->setRingId(ls[6].toInt());
@@ -926,7 +937,7 @@ void MainWindow::recoverStackData (QString & All)
         //6 :  1 0 5 4 3 2 , -1.06 -0.62 0.00 , 0.00 -0.00 1.00, 1.40 ,   0.00 -0.00 1.00 , 0.5,       1
         if (single.contains("Rings"))
         {
-            ls = single.trimmed().split(QRegExp("\\s+"));
+            ls = single.trimmed().split(RE_WHITESPACE);
             nRings=ls[1].toInt();
 
             vector <uint > idList;
@@ -937,7 +948,7 @@ void MainWindow::recoverStackData (QString & All)
                 single.replace(",", " ");
                 single.replace(":", " ");
 
-                ls = single.trimmed().split(QRegExp("\\s+"));
+                ls = single.trimmed().split(RE_WHITESPACE);
 
                 idList.clear();
                 uint size=ls[0].toInt();
@@ -968,7 +979,7 @@ void MainWindow::recoverStackData (QString & All)
         /*
         if (single.contains("SelectedAtoms"))
         {
-            ls = single.trimmed().split(QRegExp("\\s+"));
+            ls = single.trimmed().split(RE_WHITESPACE);
             nAtoms=ls[1].toInt();
 
             if(nAtoms<1) continue;
@@ -977,7 +988,7 @@ void MainWindow::recoverStackData (QString & All)
                 i=i+1;
                 single = Lines.at(i).simplified();
                 if (single.size()<1) continue;
-                ls = single.trimmed().split(QRegExp("\\s+"));
+                ls = single.trimmed().split(RE_WHITESPACE);
 
                 vector <uint > idList;
 
@@ -991,7 +1002,7 @@ void MainWindow::recoverStackData (QString & All)
 
         if (single.contains("SelectedBonds"))
         {
-            ls = single.trimmed().split(QRegExp("\\s+"));
+            ls = single.trimmed().split(RE_WHITESPACE);
             nBonds=ls[1].toInt();
 
             if(nBonds<1) continue;
@@ -1001,7 +1012,7 @@ void MainWindow::recoverStackData (QString & All)
                 i=i+1;
                 single = Lines.at(i);
                 //single.replace(":", " ");
-                ls = single.trimmed().split(QRegExp("\\s+"));
+                ls = single.trimmed().split(RE_WHITESPACE);
 
                 vector <uint > idList;
 
@@ -1231,7 +1242,7 @@ void MainWindow::on_actionEditbond_triggered()
 
 void MainWindow::on_actionSingleBond_triggered()
 {
-    if(view3d->numSelectedBonds()<0) return;
+    if(view3d->numSelectedBonds()<1) return;
     view3d->setSelectedBondOrder(1);
     view3d->refresh();
 }
@@ -1256,7 +1267,7 @@ void MainWindow::on_actionTripleBond_triggered()
 
 void MainWindow::on_actionQuadrupleBond_triggered()
 {
-    if(view3d->numSelectedBonds()<0) return;
+    if(view3d->numSelectedBonds()<1) return;
     view3d->setSelectedBondOrder(4);
     view3d->refresh();
 
@@ -1264,21 +1275,21 @@ void MainWindow::on_actionQuadrupleBond_triggered()
 
 void MainWindow::on_actionWeakBond_triggered()
 {
-    if(view3d->numSelectedBonds()<0) return;
+    if(view3d->numSelectedBonds()<1) return;
     view3d->setSelectedBondOrder(7);
     view3d->refresh();
 }
 
 void MainWindow::on_actionHydrogenbond_triggered()
 {
-    if(view3d->numSelectedBonds()<0) return;
+    if(view3d->numSelectedBonds()<1) return;
     view3d->setSelectedBondOrder(5);
     view3d->refresh();
 }
 
 void MainWindow::on_actionAromaticBond_triggered()
 {
-    if(view3d->numSelectedBonds()<0) return;
+    if(view3d->numSelectedBonds()<1) return;
     view3d->setSelectedBondOrder(6);
     view3d->updateMol();
 }
@@ -1445,7 +1456,7 @@ void MainWindow::on_actionXTB_optimize_triggered()
         return;
     }
 
-    HuckelTextForm * form = new HuckelTextForm ("XTB calculation",nullptr);
+    auto form = new HuckelTextForm ("XTB calculation",nullptr);
     form->setWindowTitle("XTB-Grimme");
 
     if (form!=nullptr)
@@ -1672,6 +1683,7 @@ void MainWindow::on_pushButton_calcHuckel_clicked()
 
     if(ehmo!=nullptr)
         ehmo->clearAll();
+
     if(hmo == nullptr)
         hmo = new HMO();
     else
@@ -1685,10 +1697,9 @@ void MainWindow::on_pushButton_calcHuckel_clicked()
 
     view3d->setHMO(hmo);
 
-
     QApplication::setOverrideCursor(Qt::WaitCursor);
     view3d->updateMol();
-    HuckelTextForm * form = new HuckelTextForm ();
+    auto form = new HuckelTextForm ();
     form->setWindowTitle("Simple-HMO method");
 
     if (form==nullptr) return;
@@ -1698,33 +1709,43 @@ void MainWindow::on_pushButton_calcHuckel_clicked()
     QApplication::restoreOverrideCursor();
 
     form->exec();
+
+    ui.checkBox_AOType->setEnabled(true);
+    ui.checkBox_MOType->setEnabled(true);
+    ui.tabWidget_2->setTabText(0,"HMO");
 }
 
 
 
 void MainWindow::on_pushButton_calcExtendedHuckel_clicked()
 {
-    if (mol==nullptr) return;
+    if (mol==nullptr) {
+        qDebug() << "DEBUG: mol is nullptr, returning";
+        return;
+    }
+
+    uint numAtoms=mol->NumAtoms();
+
+    if (numAtoms<1)
+    {
+        QMessageBox::warning(this, "Warning","Empty molecule!");
+        return;
+    }
 
     isEHMO=true;
     isHMO=false;
     view3d->releaseAllActors();
     view3d->setDefaultOperationMode();
 
-    uint numAtoms=mol->NumAtoms();
-    if (numAtoms<2)
-    {
-        QMessageBox::warning(this, "Warning","Empty molecue!");
-        return;
-    }
-
     if(hmo!=nullptr)
         hmo->clearAll();
 
-    if(ehmo != nullptr)
+    if(ehmo != nullptr) {
         ehmo->clearAll();
-    else
+    }
+    else {
         ehmo = new EHMO();
+    }
 
 
     if(ehmo==nullptr) {
@@ -1737,16 +1758,22 @@ void MainWindow::on_pushButton_calcExtendedHuckel_clicked()
     view3d->updateMol();
     view3d->setEHMO(ehmo);
 
-    HuckelTextForm * form = new HuckelTextForm ();
+    auto form = new HuckelTextForm ();
     form->setWindowTitle("Extend-HMO method");
+
 
     if (form==nullptr) return;
     form->setCalExtendedHuckel();
     form->setParent(this);
     form->setAttribute( Qt::WA_DeleteOnClose, true );
+
     QApplication::restoreOverrideCursor();
 
     form->exec();
+
+    ui.checkBox_AOType->setDisabled(true);
+    ui.checkBox_MOType->setDisabled(true);
+    ui.tabWidget_2->setTabText(1,"扩展HMO");
 }
 
 
@@ -1852,46 +1879,28 @@ void MainWindow::on_checkBox_hideHuckelOrbital_stateChanged(int arg1)
 
 
 
-
 void MainWindow::on_huckelEnergyView_clicked(const QModelIndex &index)
 {
     if (mol==nullptr) return;
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-
     if(isHMO)
     {
         scaleAO = hmo->buildHuckelMO(index.row());
-
         updateHuckelAO=false;
-
-        //
         ui.horizontalSlider->setValue(round(scaleAO*10));
 
         view3d->renderMol();
-        QApplication::restoreOverrideCursor();
-
-        updateHuckelAO=true;
-        return;
     }
-
-    if(isEHMO)
+    else if(isEHMO)
     {
         ehmo->buildExtendedHuckelMO(index.row());
-
-        updateHuckelAO=false;
-
-        //100->0.5,200->1.0,300->1.5
-        //ui.horizontalSlider->setValue(round(scaleAO*10));
-
         view3d->renderMol();
-        QApplication::restoreOverrideCursor();
-
-        //updateHuckelAO=true;
-        return;
     }
 
+    updateHuckelAO=true;
+    QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::updateExtendedHuckelMOs()
@@ -1911,14 +1920,14 @@ void MainWindow::updateExtendedHuckelMOs()
 
 
 
-    for(int i = 0; i < nCount; ++i)
+    for(auto  i = 0; i < nCount; ++i)
     {
         double d=ehmo->huckelEigValues[i];
-        str.sprintf("%10.4f", "float",d);
+        str = QString("%1").arg(d, 10, 'f', 4);
 
         if(d > 0.0) str="+"+str;
 
-        str.remove(QRegExp("\\s"));
+        str.remove(RE_WHITESPACE_SINGLE);
 
         auto item = new QStandardItem(str);
         model->appendRow(item);
@@ -1960,13 +1969,13 @@ void MainWindow::updateHuckelMOs()
     QChar spinUp=QChar(0x2191);
     int numElectrons;
 
-    for(int i = 0; i < nCount; i++)
+    for(auto i = 0; i < nCount; i++)
     {
         double d=hmo->huckelEigValues[i];
         double dn=hmo->huckelEigValues[i+1];
         double dp;
 
-        str.sprintf("%8.4f", "float",d);
+        str = QString("%1").arg(d, 8, 'f', 4);
 
         if(d > 0.0) str="+"+str;
 
@@ -2000,7 +2009,7 @@ void MainWindow::updateHuckelMOs()
 
         str+=str_;
 
-        str.remove(QRegExp("\\s"));
+        str.remove(RE_WHITESPACE_SINGLE);
 
         auto item = new QStandardItem(str);
         model->appendRow(item);
@@ -2031,16 +2040,6 @@ void MainWindow::on_pushButton_colorOrbital_clicked()
         form->setAttribute( Qt::WA_DeleteOnClose, true );
         form->exec();
     }
-}
-
-void MainWindow::on_checkBox_xyzAxis_stateChanged(int arg1)
-{
-    if(arg1)
-        view3d->setXYZAxisVisible(true);
-    else
-        view3d->setXYZAxisVisible(false);
-
-    view3d->updateMol();
 }
 
 void MainWindow::on_action_about_triggered()

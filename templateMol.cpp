@@ -107,7 +107,7 @@ void templateMol::LoadFile(QString _file)
         {
             line=file.readLine().simplified();
 
-            lst=line.split(" ",QString::SkipEmptyParts);
+            lst=line.split(" ",Qt::SkipEmptyParts);
 
             if (line.contains("hot")) {
                 hotIndex=i;
@@ -146,7 +146,7 @@ void templateMol::LoadFile(QString _file)
         for (uint i=0;i<_numBonds;i++)
         {
             line=file.readLine().simplified();
-            lst=line.split(" ",QString::SkipEmptyParts);
+            lst=line.split(" ",Qt::SkipEmptyParts);
             if  (lst.size()!=3) continue;
 
             uint bondorder=lst[2].toInt();

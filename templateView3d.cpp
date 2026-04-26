@@ -6,7 +6,7 @@
 #include <vtkProperty.h>
 #include <vtkDataSetMapper.h>
 
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkDataSet.h>
@@ -36,7 +36,7 @@ TemplateView3d::TemplateView3d(QWidget *parent): QVTKOpenGLNativeWidget(parent)
   this->setWindowTitle("Template");
 
   vtkNew<vtkGenericOpenGLRenderWindow> window;
-  SetRenderWindow(window.Get());
+  setRenderWindow(window.Get());
 
   //background color
   bkcolor.Set(0.4,0.5,0.5);
@@ -54,13 +54,13 @@ TemplateView3d::TemplateView3d(QWidget *parent): QVTKOpenGLNativeWidget(parent)
   m_renderer = vtkSmartPointer<vtkRenderer>::New();
   m_renderer->SetActiveCamera(camera);
   m_renderer->SetBackground(bkcolor.x(), bkcolor.y(), bkcolor.z());
-  GetRenderWindow()->AddRenderer(m_renderer);
+  renderWindow()->AddRenderer(m_renderer);
 
 
   interactor = actorInteractorStyleT::New();
   interactor->SetDefaultRenderer(m_renderer);
   interactor->setView3dT(this);
-  GetInteractor()->SetInteractorStyle(interactor);
+  QVTKOpenGLNativeWidget::interactor()->SetInteractorStyle(interactor);
 
   selectedColor=buildColor(Qt::green);
   bondRadius=0.06;
@@ -853,7 +853,7 @@ void TemplateView3d::renderAtoms()
     vector3 color;
 
     if (_isAtomLabelVisible )
-    cout << "visibile label inside "<<endl;
+        cout << "visibile label inside "<<endl;
     else {
         cout << "invisibile label inside "<<endl;
     }

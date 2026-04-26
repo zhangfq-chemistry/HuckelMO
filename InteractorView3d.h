@@ -1,11 +1,10 @@
 #ifndef SELECTAREAINTERACTORSTYLE_H
 #define SELECTAREAINTERACTORSTYLE_H
 
+
 #include <QObject>
 
 #include <vtkInteractorStyleRubberBandPick.h>
-#include <vtkProperty.h>
-#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkRenderWindowInteractor.h>
 
 #include <vtkCamera.h>
@@ -73,6 +72,7 @@ public:
     vtkCamera * getCamera();
     void setView3d(View3D *);
     void setMainWindow(MainWindow *);
+    MainWindow * getMainWindow();
 
     void highlightActor(vtkActor * );
     void buildAtomLabel(vtkActor * );
@@ -91,7 +91,7 @@ public:
     void setSelectionMode();
     void setOperateSelectedMode();
 
-    bool isLinkTemplateMode() ;
+bool isLinkTemplateMode() ;
     bool isPencilDrawMode();
     bool isSingleSelectionMode();
     bool isSelectionMode();
@@ -182,7 +182,6 @@ protected:
     bool isLeftButtonDown,isRightButtonDown,isMiddleButtonDown;
 
     bool isMouseMove;
-    //int  xhitPos,yhitPos;
 
     vtkSmartPointer<vtkActor> m_highlightActor;
     vtkActor  * pickedActor;
@@ -195,10 +194,35 @@ protected:
     vector3 v0,v1;
     double selectedColor[3];
 
-    uint beg[2],end[2];
+    uint beg[2], end[2];
     int NumberOfClicks;
     bool doubleClick;
     int * sizePort;
+
+    MainWindow * mainWindow;
+
+private:
+  unsigned int  NumberOfClicks2;
+  int PreviousPosition[2];
+  int ResetPixelDistance;
+
+  double boxCenter[3];
+  vector3 obj_centerV;
+  double boundRadius;
+  double view_up[3], view_look[3], view_right[3];
+  double outsidept[3];
+  double disp_obj_center[3];
+
+  double nxf ;
+  double nyf ;
+  double oxf ;
+  double oyf ;
+
+  double newXAngle;
+    double newYAngle;
+    double oldXAngle;
+    double oldYAngle;
+    double radius;
 };
 
 #endif // SELECTAREAINTERACTORSTYLE_H

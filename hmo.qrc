@@ -37,29 +37,12 @@
         <file>images/656.xbm</file>
         <file>images/acetylenyl.xbm</file>
         <file>images/acid.xbm</file>
-        <file>images/adamantane.xbm</file>
         <file>images/amide.xbm</file>
-        <file>images/anthr.xbm</file>
-        <file>images/asixfive.xbm</file>
-        <file>images/azu.xbm</file>
-        <file>images/bicychept.xbm</file>
-        <file>images/bicycoct.xbm</file>
-        <file>images/biphenyl.xbm</file>
         <file>images/bipyr.xbm</file>
-        <file>images/bucky.xbm</file>
         <file>images/butyl.xbm</file>
         <file>images/carbonyl.xbm</file>
-        <file>images/cbane.xbm</file>
-        <file>images/chexbt.xbm</file>
-        <file>images/chexch.xbm</file>
-        <file>images/coronene.xbm</file>
-        <file>images/cp.xbm</file>
-        <file>images/cpane.xbm</file>
-        <file>images/cpene.xbm</file>
-        <file>images/cprane.xbm</file>
         <file>images/cyano.xbm</file>
         <file>images/ethyl.xbm</file>
-        <file>images/furanyl.xbm</file>
         <file>images/ipropyl.xbm</file>
         <file>images/l_benz.xbm</file>
         <file>images/l_cbd.xbm</file>
@@ -69,30 +52,14 @@
         <file>images/l_cprop.xbm</file>
         <file>images/l_eth.xbm</file>
         <file>images/l_trop.xbm</file>
-        <file>images/mr7.xbm</file>
-        <file>images/mr8.xbm</file>
-        <file>images/naphth.xbm</file>
         <file>images/nitro.xbm</file>
         <file>images/nitroso.xbm</file>
-        <file>images/oxirane.xbm</file>
-        <file>images/phenyl.xbm</file>
         <file>images/phosphinyl.xbm</file>
         <file>images/porph.xbm</file>
         <file>images/propyl.xbm</file>
-        <file>images/pyrazine.xbm</file>
-        <file>images/pyridazine.xbm</file>
-        <file>images/pyridinyl.xbm</file>
-        <file>images/pyrimidine.xbm</file>
-        <file>images/pyrryl.xbm</file>
-        <file>images/rings3.xbm</file>
-        <file>images/rings4.xbm</file>
         <file>images/sulfonyl.xbm</file>
         <file>images/sulfoxide.xbm</file>
         <file>images/tbutyl.xbm</file>
-        <file>images/thf.xbm</file>
-        <file>images/thiophenyl.xbm</file>
-        <file>images/tropylium.xbm</file>
-        <file>images/two5mr.xbm</file>
         <file>images/vinyl.xbm</file>
         <file>images/oct.svg</file>
         <file>images/sqaprism.svg</file>
@@ -111,8 +78,6 @@
         <file>images/editUndo.png</file>
         <file>images/symmetry.png</file>
         <file>images/editPaste.png</file>
-        <file>images/cut.png</file>
-        <file>images/fileSave.png</file>
         <file>images/fileSave.png</file>
         <file>images/reset.png</file>
         <file>images/center.png</file>
@@ -122,7 +87,6 @@
         <file>images/triplebond.svg</file>
         <file>images/quadruplebond.svg</file>
         <file>images/hydrogenbond.svg</file>
-        <file>images/weakbond.svg</file>
         <file>images/aromaticbond.svg</file>
         <file>images/picture.png</file>
         <file>images/UFF.png</file>

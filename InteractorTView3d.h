@@ -9,7 +9,7 @@
 #include <vtkProperty.h>
 #include <vtkDataSetMapper.h>
 
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkDataSet.h>

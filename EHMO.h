@@ -3,12 +3,17 @@
 
 #include <QVector>
 #include <vector>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <iostream>
 #include "math/vector3.h"
 #include "Mol.h"
 
-
-
-using namespace  std;
+class EHMOException : public std::runtime_error {
+public:
+    explicit EHMOException(const std::string& msg) : std::runtime_error(msg) {}
+};
 
 struct SlateBasisSets
 {
@@ -44,7 +49,6 @@ struct polyDataOrbitalHMO
     vtkPolyData * negLobe;  //negative data
     vtkPolyData * zeroNode; //node data
 };
-
 
 
 class EHMO
@@ -116,7 +120,7 @@ public:
                                    int n2, int l2, int m2, double zeta2, vector3 pos2);
     double SlaterOverlap(SlateBasisSets * , SlateBasisSets *);
 
-    unsigned numBasisSets() {return MolBasisSets.size();}
+    unsigned numBasisSets() const {return MolBasisSets.size();}
 
 
     //tight-binding
@@ -139,8 +143,10 @@ public:
     vtkPolyData * pData,  * pData1, * pDataNode; //Psi
     vtkPolyData * ylmData,  * ylmData1; //Ylm
 
-    bool isSurfaceOK() {return _isSurfaceOK;}
+    bool isSurfaceOK() const {return _isSurfaceOK;}
 
+    bool validateBasis() const;
+    bool validateMolecule() const;
 
     //-----------------------------------------------------------------------------------//
     int  KroneckerDelta(int i,int j);

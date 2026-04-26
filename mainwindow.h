@@ -77,6 +77,7 @@ QT_END_NAMESPACE
 
 class QStandardItemModel;
 
+class HuckelTextForm;
 class templateMol;
 class TemplateView3d;
 class AtomTemplate;
@@ -96,6 +97,7 @@ struct MolData
     vector < bool >    ringAromatic;
 };
 
+#include <QProgressBar>
 
 class MainWindow : public QMainWindow
 {
@@ -121,17 +123,10 @@ public slots:
     //void on_pushButton_YZ_clicked();
 
 
-
-
     void on_actionFileNew_triggered();
-
     void on_actionFileOpen_triggered();
-
     void on_actionFileSave2PNG_triggered();
-
-
     void on_pushButton_clean_clicked();
-
 
     void on_pushButton_addHydrogen_clicked();
 
@@ -142,8 +137,6 @@ public slots:
     void on_pushButton_cleardata_clicked();
 
     //void on_pushButton_reset_clicked();
-
-
 
 
 
@@ -360,9 +353,6 @@ private slots:
 
   void on_pushButton_colorOrbital_clicked();
 
-  void on_checkBox_xyzAxis_stateChanged(int arg1);
-
-
   void on_action_about_triggered();
 
   void on_actionLabel_triggered();
@@ -376,6 +366,7 @@ private:
   Ui::MainWindow ui;
   bool needFreshView;
   bool isMOExisted;
+  //HuckelTextForm * huckelTextForm;
 
   double scaleAO;
   bool updateHuckelAO;

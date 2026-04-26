@@ -1073,6 +1073,7 @@ void transpose_nib(void);
 void eval_user_function(void);
 int rewrite(void);
 int rewrite_nib(void);
+char * factor_polynomial(const char *expr);
 }
 
 #endif // AAA_H

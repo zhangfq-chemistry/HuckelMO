@@ -1,7 +1,10 @@
 #include "bondProperty.h"
 #include <QMessageBox>
+#include <QRegularExpression>
 
 #include "mainwindow.h"
+
+static const QRegularExpression RE_WHITESPACE("\\s+");
 
 
 
@@ -92,8 +95,8 @@ void bondProperty::initial()
 
 
 
-    qSort(idList1.begin()+1, idList1.end());
-    qSort(idList2.begin()+1, idList2.end());
+    std::sort(idList1.begin()+1, idList1.end());
+    std::sort(idList2.begin()+1, idList2.end());
 
 
 
@@ -294,7 +297,7 @@ void bondProperty::setBondLength()
       vector <uint> mlist1;
 
       int m_index;
-      QStringList lines=list1_text.split(QRegExp("\\s+"));
+      QStringList lines=list1_text.split(RE_WHITESPACE);
       for (int i=0; i<lines.count(); i++) {
           m_index=lines[i].toInt()-1;
           if(m_index>=0 && m_index<10000)  mlist1.push_back(m_index);
@@ -312,7 +315,7 @@ void bondProperty::setBondLength()
 
       vector <uint> mlist2;
       lines.clear();
-      lines=list2_text.split(QRegExp("\\s+"));
+      lines=list2_text.split(RE_WHITESPACE);
       for (int i=0; i<lines.count(); i++) {
           m_index=lines[i].toInt()-1;
           if(m_index>=0 && m_index<10000)  mlist2.push_back(m_index);

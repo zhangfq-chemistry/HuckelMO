@@ -1,10 +1,13 @@
 #include "InteractorView3d.h"
 
+#define VTKISRBP_ORIENT 0
+#define VTKISRBP_SELECT 1
+
 #include <vtkObjectFactory.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
-#include <vtkAreaPicker.h>
 #include <vtkPlanes.h>
 #include <vtkProp3DCollection.h>
 #include <vtkProp3D.h>
@@ -47,6 +50,11 @@ SelectAreaInteractorStyle::SelectAreaInteractorStyle(QObject *parent) : QObject(
     NumberOfClicks = 0;
 
     vtkColor(HighlightColor, selectedColor);
+}
+
+MainWindow * SelectAreaInteractorStyle::getMainWindow()
+{
+    return view3d ? view3d->getMainWindow() : nullptr;
 }
 
 
@@ -1821,6 +1829,13 @@ void SelectAreaInteractorStyle::contextMenu()
     popMenu.addAction(&actionHideAxis);
     connect(&actionHideAxis,  SIGNAL( triggered() ), this, SLOT( slot_HideAxis() ) );
 */
+    if(numSelAtoms>0)
+    {
+        QAction actionAddH ("加氢");
+        actionAddH.setFont ( QFont("Courier", 13));
+        popMenu.addAction(&actionAddH);
+        connect(&actionAddH, SIGNAL(triggered()), getMainWindow(), SLOT( on_pushButton_addHydrogen_clicked() ) );
+    }
 
     popMenu.exec( QCursor::pos());
 }

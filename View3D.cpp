@@ -13,7 +13,7 @@
 #include <vtkProperty.h>
 #include <vtkDataSetMapper.h>
 
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkDataSet.h>
@@ -33,7 +33,7 @@
 #include <vtkWindowToImageFilter.h>
 #include <vtkPlaneSource.h>
 #include <vtkBox.h>
-//#include "vtkCapsuleSource.h"
+
 
 #include <vtkOrientationMarkerWidget.h>
 
@@ -119,12 +119,7 @@
 
 // important
 //int Point::_tag = 0;
-/*
-static void CameraModifiedCallback(vtkObject* caller,
-                                   long unsigned int vtkNotUsed(eventId),
-                                   void* vtkNotUsed(clientData),
-                                   void* vtkNotUsed(callData));
-*/
+
 void View3D::initializeActor (vtkActor * actor)
 {
     if(actor==nullptr) return;
@@ -164,7 +159,7 @@ View3D::View3D(QWidget *parent): QVTKOpenGLNativeWidget(parent)
     this->setWindowTitle("3D Viewer");
 
     vtkNew<vtkGenericOpenGLRenderWindow> window;
-    SetRenderWindow(window.Get());
+    setRenderWindow(window.Get());
 
 
     //background color
@@ -199,7 +194,7 @@ View3D::View3D(QWidget *parent): QVTKOpenGLNativeWidget(parent)
     m_renderer = vtkSmartPointer<vtkRenderer>::New();
     m_renderer->SetActiveCamera(camera);
     m_renderer->SetBackground(bkcolor.x(), bkcolor.y(), bkcolor.z());
-    GetRenderWindow()->AddRenderer(m_renderer);
+    renderWindow()->AddRenderer(m_renderer);
 
     m_renderer->LightFollowCameraOn();
     m_renderer->TwoSidedLightingOn();
@@ -339,7 +334,7 @@ void View3D::setAreaInteractor()
     actorInteractorA = SelectAreaInteractorStyle::New();
     actorInteractorA->SetDefaultRenderer(m_renderer);
     actorInteractorA->setView3d(this);
-    GetInteractor()->SetInteractorStyle(actorInteractorA);
+    interactor()->SetInteractorStyle(actorInteractorA);
 }
 
 
@@ -356,7 +351,7 @@ void View3D::rotateMol()
 
 void View3D::updateView()
 {
-     GetRenderWindow()->Render();
+     renderWindow()->Render();
 }
 
 void View3D::setBKColor(vector3 color)
@@ -394,7 +389,7 @@ void View3D:: onViewXZ()
     camera->Elevation(-90);
     camera->SetFocalPoint(0,0,0);
     camera->ComputeViewPlaneNormal();
-    GetRenderWindow()->Render();
+    renderWindow()->Render();
 }
 
 void View3D:: onViewYZ()
@@ -409,7 +404,7 @@ void View3D:: onViewYZ()
     camera->Elevation(-90);
     camera->SetFocalPoint(0,0,0);
     camera->ComputeViewPlaneNormal();
-    GetRenderWindow()->Render();
+    renderWindow()->Render();
 }
 
 
@@ -2348,7 +2343,7 @@ void View3D:: writePNG(QString name)
     //setBKColor(whiteColor);
 
     auto windowToImageFilter =  vtkSmartPointer<vtkWindowToImageFilter>::New();
-    windowToImageFilter->SetInput(GetRenderWindow());
+    windowToImageFilter->SetInput(renderWindow());
     windowToImageFilter->SetScale(4);
     windowToImageFilter->SetInputBufferTypeToRGBA(); //also record the alpha (transparency) channel
     windowToImageFilter->ReadFrontBufferOff(); // read from the back buffer
@@ -3179,7 +3174,7 @@ void View3D::releaseAllActors()
     releaseSelectedRingActors();
 
     renderMol();
-    cout << " void View3D::releaseAllActors()"<<endl;
+    cout << "void View3D::releaseAllActors()"<<endl;
 }
 
 void View3D::releaseInteractorPickedActor()

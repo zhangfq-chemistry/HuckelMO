@@ -19899,4 +19899,47 @@ rewrite_nib(void)
     return n;
 }
 
+static char s_factor_buf[100000];
+static int s_factor_init_done = 0;
+
+char *
+factor_polynomial(const char *expr)
+{
+    if (setjmp(stop_return)) {
+        snprintf(s_factor_buf, sizeof(s_factor_buf), "(error)");
+        return s_factor_buf;
+    }
+
+    if (!s_factor_init_done) {
+        init();
+        s_factor_init_done = 1;
+    }
+
+    prep();
+    binding[TRACE] = zero;
+
+    char cmd[100000];
+    snprintf(cmd, sizeof(cmd), "factor(%s)", expr);
+
+    if (scan_nib(cmd) == NULL) {
+        snprintf(s_factor_buf, sizeof(s_factor_buf), "(parse error)");
+        return s_factor_buf;
+    }
+
+    eval();
+
+    p2 = pop();
+
+    print_nib(p2);
+    print_char('\0');
+
+    size_t len = outbuf_index < (int)sizeof(s_factor_buf) - 1
+                     ? outbuf_index
+                     : sizeof(s_factor_buf) - 1;
+    memcpy(s_factor_buf, outbuf, len);
+    s_factor_buf[len] = '\0';
+
+    return s_factor_buf;
+}
+
 }

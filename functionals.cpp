@@ -360,11 +360,11 @@ bool isDigit(const QString& src)
 
     while(*s && *s>='0' && *s<='9') s++;
 
-    if (*s)//不是纯数字
+    if (*s)
     {
         return -1;
     }
-    else//纯数字
+    else
     {
         return 0;
     }
@@ -438,7 +438,7 @@ bool isInt(QString & str)
     if (m_string.isEmpty()) return false;
 
     uint length=m_string.length();
-    for (int i=0;i<length;i++)
+    for (size_t i=0;i<length;i++)
     {
         if(!m_string.at(i).isDigit())
         {

@@ -1,53 +1,50 @@
-QT     += core gui widgets charts #datavisualization
+QT     += core gui widgets charts
 
 requires(qtConfig(filedialog))
 requires(qtConfig(treeview))
 
 
-
 DEFINES+=DMS_INCLUDE_SOURCE
 
 MKLDIR = $$(MKLROOT)
-#LIBS += -L$$MKLDIR/lib/intel64 -fopenmp -lmkl_gf_ilp64 -lmkl_gnu_thread -lmkl_core -Wl,-rpath,$$MKLDIR/lib/intel64
-
-LIBS += -L/usr/local/lib64 -L/usr/local/lib -lopenbabel # -larmadillo -lginac
-LIBS += -lQtColorWidgets-Qt52 -fopenmp
 
 
-
-#https://github.com/hosseinmoein/Matrix
-#https://github.com/simunova/mtl4
-#Armadillo：
-#ViennaCL：
-#PETSc：
-
-# OpenMP Å
-#msvc {
-#   QMAKE_CXXFLAGS += /openmp
-#   QMAKE_LFLAGS += /openmp
-#}
-#!msvc
- {
-  QMAKE_CXXFLAGS += -fopenmp
-  QMAKE_LFLAGS += -fopenmp
-}
+LIBS += -L/usr/local/lib \
+    -L/opt/Qt/6.10.1/gcc_64/lib \
+    -L/home/zhangfq/.local/lib \
+    -lQtColorWidgets \
+    -lopenbabel \
+    -lgmp \
+    -lmpfr \
+    -lmpc \
 
 
-TARGET = QHuckelOrbital
-TEMPLATE = app
+INCLUDEPATH += . \
+    /home/zhangfq/sxnu/QtColorWidgets \
+    math/newMatrix \
+    /usr/local/include/vtk-9.6 \
+    /usr/local/include/openbabel3 \
+    /usr/local/include \
+    /home/zhangfq/.local/include
+
+
+DEPENDPATH  += . \
+    math/newMatrix \
+    /usr/local/include/vtk-9.6 \
+    /usr/local/include/openbabel3 \
+    /usr/local/include \
+    /home/zhangfq/.local/include
 
 
 
-INCLUDEPATH += .
-INCLUDEPATH    += /usr/local/include  /usr/local/include/vtk-8.2
-DEPENDPATH     += /usr/local/include  /usr/local/include/vtk-8.2
-LIBS += -L/usr/local/lib64 -L/usr/local/lib
 
-#MKLDIR = $$(MKLROOT)
 
 CONFIG -= gnu++11
+CONFIG += c++20
 
-QMAKE_CXXFLAGS+= -std=c++17
+QMAKE_CXXFLAGS = -std=c++20 -Wall -Wextra -fopenmp
+QMAKE_CXXFLAGS_RELEASE = -std=c++20 -O3 -march=native -ffast-math  -Wall -Wextra -fopenmp
+QMAKE_LFLAGS_RELEASE += -O3 -fopenmp
 
 
 CONFIG(win32, win32|macx){
@@ -177,9 +174,10 @@ CONFIG(win32, win32|macx){
     LIBS += -L$${VTK_LIB_DIR} $${VTK_LIBS}
 }
 else{ #LINUX
-VTK_INCLUDE_DIR = /usr/local/include/vtk-8.2
-VTK_LIB_DIR = /usr/local/lib64
-VTK_LIB_VER = 8.2
+#VTK 9.6 configuration
+VTK_INCLUDE_DIR = /usr/local/include/vtk-9.6
+VTK_LIB_DIR = /usr/local/lib
+VTK_LIB_VER = 9.6
 VTK_LIB_PREFIX = $${VTK_LIB_VER}
     VTK_LIB_NAME =  vtkChartsCore\
                     vtkCommonColor\
@@ -279,7 +277,7 @@ VTK_LIB_PREFIX = $${VTK_LIB_VER}
                     vtkexpat\
                     vtkfreetype\
                     vtkgl2ps\
-                    vtkglew\
+                    #vtkglew\
                     vtkhdf5\
                     vtkhdf5_hl\
                     vtkjpeg\
@@ -312,10 +310,10 @@ VTK_LIB_PREFIX = $${VTK_LIB_VER}
 
 
 
-
-HEADERS       = mainwindow.h \
+HEADERS       += mainwindow.h \
     Mol.h \
     aboutDialog.h \
+    huckelTextForm.h \
     math/symmetry.h \
     math/vector3.h \
     math/matrix3x3.h \
@@ -331,6 +329,7 @@ HEADERS       = mainwindow.h \
     torsionProperty.h \
     ringTemplate.h \
     periodicTable.h \
+    eigenMath.h \
     vtkbool/AABB.h \
     vtkbool/Decomposer.h \
     vtkbool/Merger.h \
@@ -350,16 +349,16 @@ HEADERS       = mainwindow.h \
     vtkBestFitPlane.h \
     EHMO.h \
     functionals.h \
-    math/characterTable.h \
-    displayTextForm.h \
     HMO.h \
-    eigenMath.h \
-    eigenMath.h
+    polyfactor/lll_gs.h \
+    polyfactor/lll_functions.h \
 
 
-SOURCES       = main.cpp \
+
+SOURCES       += main.cpp \
     Mol.cpp \
     aboutDialog.cpp \
+    huckelTextForm.cpp \
     mainwindow.cpp \
     math/matrix3x3.cpp \
     math/symmetry.cpp \
@@ -376,6 +375,7 @@ SOURCES       = main.cpp \
     torsionProperty.cpp \
     ringTemplate.cpp \
     periodicTable.cpp \
+    eigenMath.cpp \
     vtkbool/Decomposer.cpp \
     vtkbool/Merger.cpp \
     vtkbool/PyInit.cxx \
@@ -395,20 +395,11 @@ SOURCES       = main.cpp \
     vtkBestFitPlane.cxx \
     EHMO.cpp \
     functionals.cpp \
-    math/characterTable.cpp \
-    displayTextForm.cpp \
     HMO.cpp \
-    eigenMath.cpp
 
 
 
-
-
-
-
-
-
-#RESOURCES     =  hmo.qrc
+#https://github.com/geodavic/poly_factor.git
 
 
 FORMS += \
@@ -428,20 +419,6 @@ FORMS += \
 
 
 
-
-
 RESOURCES +=  hmo.qrc
-
-DISTFILES += \
-    eigenMath/Eigenmath.pdf \
-    eigenMath/README.md \
-    eigenMath/test-script.txt \
-    eigenMath/Eigenmath.pdf \
-    eigenMath/help.html \
-    eigenMath/README.md \
-    eigenMath/test-script.txt \
-    eigenMath/Makefile
-
-
 
 

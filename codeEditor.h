@@ -104,7 +104,6 @@ private:
 };
 
 
-
 class LineNumberArea : public QWidget
 {
 public:

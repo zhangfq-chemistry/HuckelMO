@@ -46,16 +46,16 @@
         <item row="0" column="0">
          <widget class="QFrame" name="frame">
           <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
+           <enum>QFrame::Shape::StyledPanel</enum>
           </property>
           <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
+           <enum>QFrame::Shadow::Raised</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="0">
             <widget class="CodeEditor" name="textEdit_dataMol">
              <property name="frameShape">
-              <enum>QFrame::Box</enum>
+              <enum>QFrame::Shape::Box</enum>
              </property>
             </widget>
            </item>
@@ -86,7 +86,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_1">
        <attribute name="title">
@@ -265,7 +265,7 @@
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
+         <enum>QFrame::Shape::NoFrame</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_15">
          <item row="2" column="1">
@@ -437,7 +437,7 @@
            <item>
             <widget class="QFrame" name="frame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_9">
               <item row="3" column="0">
@@ -513,7 +513,7 @@
               <item row="6" column="0" colspan="2">
                <widget class="QSlider" name="horizontalSlider">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                </widget>
               </item>
@@ -611,7 +611,7 @@
      <x>0</x>
      <y>0</y>
      <width>1142</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

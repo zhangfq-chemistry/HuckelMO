@@ -47,10 +47,6 @@ public:
 
   void storeColor(double r,double g, double b) ;
   void recoverInitialColor ()  ;
-//--------------------------------------------------------------
-
-
-(2) appending the following to vtkActor.cxx
 
   void vtkActor::storeColor(double r,double g, double b) 
   {	
@@ -58,14 +54,12 @@ public:
   } 
   
  void vtkActor::recoverInitialColor () 
-  {
+ {
     this->GetProperty()->SetColor( _color); 
  }
-
-(3)compile and install 
-tools/QtColorWidgets
-
-(4) install xtb from website
+//----------------------------------------------
+(2)compile and install QtColorWidgets/openbabel in 3rd
+(3) install xtb from website
 
 
     

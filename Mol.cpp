@@ -5,17 +5,19 @@
 #include <QStringList>
 
 #include <QString>
+#include <QRegularExpression>
 #include <QIODevice>
 
 #include <vector>
-//#include <Eigen/Core>
 #include <QProcess>
+
+static const QRegularExpression RE_WHITESPACE("\\s+");
+static const QRegularExpression RE_COMMA(",");
 
 
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/chains.h>
-//#include <openbabel/babelconfig.h>
 #include <openbabel/generic.h>
 #include <openbabel/optransform.h>
 #include <openbabel/plugin.h>
@@ -55,7 +57,6 @@
 #include <MathOperators.h>
 #include <Complex.h>
 #include <Matrix.h>
-
 
 
 
@@ -1439,7 +1440,7 @@ void HMol::loadxyzfromQString(QString text)
     {
         line=lst[i].simplified();
         if (line.size()<5) continue;
-        single=line.split(" ",QString::SkipEmptyParts);
+        single=line.split(" ",Qt::SkipEmptyParts);
         if (single.size()!=4) continue;
 
         if(isNumber(single[0]))
@@ -1472,7 +1473,7 @@ void HMol::addatomfromQString(QString data)
     {
         line=lst[i].simplified();
         if (line.size()<5) continue;
-        single=line.split(" ",QString::SkipEmptyParts);
+        single=line.split(" ",Qt::SkipEmptyParts);
         if (single.size()!=4) continue;
 
         if(isNumber(single[0]))
@@ -1510,7 +1511,8 @@ void HMol::load_xyz(QString filename)
         QString line(file.readLine());
         line.chop(1);
         if (isNumber(line)) continue;
-        lst=line.split(" ",QString::SkipEmptyParts);
+        lst=line.split(" ",Qt::SkipEmptyParts);
+
 
         if (lst.size()!=4) continue;
 
@@ -1518,6 +1520,8 @@ void HMol::load_xyz(QString filename)
         x=lst[1].toDouble();
         y=lst[2].toDouble();
         z=lst[3].toDouble();
+
+        qDebug()<<atomLabel <<x<<y<<z;
 
         addAtom(atomLabel,x,y,z);
     }
@@ -1798,7 +1802,7 @@ void HMol::load_mol(QString filename)
     while(!file.atEnd()) {
         QString line(file.readLine());
         if (isNumber(line)) continue;
-        lst=line.split(" ",QString::SkipEmptyParts);
+        lst=line.split(" ",Qt::SkipEmptyParts);
 
         if (lst.size()==9)
         {
@@ -3461,7 +3465,7 @@ void HMol::runXTB()
     uint numAtoms=NumAtoms();
 
     QString str2;
-    str2.sprintf("%3d\n", numAtoms);
+    str2 = QString("%1\n").arg(numAtoms, 3);
     file.write(str2.toUtf8());
     file.write("run xtb by zhangfq\n");
 
@@ -3473,7 +3477,7 @@ void HMol::runXTB()
         y=getAtomYbyIndex(i);
         z=getAtomZbyIndex(i);
 
-        str2.sprintf("%3s %10.5f  %10.5f  %10.5f\n", asymbol.toStdString().c_str(), x,y,z);
+        str2 = QString("%1 %2 %3 %4\n").arg(asymbol).arg(x, 10, 'f', 5).arg(y, 10, 'f', 5).arg(z, 10, 'f', 5);
         file.write(str2.toUtf8());
     }
     file.write("\n\n");
@@ -3502,7 +3506,7 @@ void HMol::runXTB()
     {
         QString line(file.readLine());
         if (IsNumber(line)) continue;
-        lst=line.split(" ",QString::SkipEmptyParts);
+        lst=line.split(" ",Qt::SkipEmptyParts);
         if (lst.size()!=4) continue;
 
         atomLabel=lst[0];
@@ -3595,7 +3599,7 @@ bool HMol::canbePaste()
     QString  Text= QApplication::clipboard()->text();//.simplified()--this function can convert data to 1 line.
     QString tmpText=Text;
     tmpText=tmpText.simplified();
-    if(!tmpText.isSimpleText())  return false;
+    // Qt6 removed isSimpleText, removed check
     if (tmpText.length() < 10)   return false;
 
 
@@ -3637,7 +3641,7 @@ bool HMol::canbePaste()
 
         for(i=0;i<nAtoms;i++){
             line=lst[i].simplified();
-            satom=line.split(" ",QString::SkipEmptyParts);
+            satom=line.split(" ",Qt::SkipEmptyParts);
             if(satom.size()!=6) continue;
 
             if(isNumber(satom[0]))
@@ -3669,7 +3673,7 @@ bool HMol::canbePaste()
         {
             line=lst[i+j].simplified();
             //cout << line.toStdString().c_str()<<endl;
-            sbond=line.split(" ",QString::SkipEmptyParts);
+            sbond=line.split(" ",Qt::SkipEmptyParts);
             if (sbond.size()!=3) return false;
 
             if(!isInt(sbond[0])) return false;
@@ -3693,7 +3697,7 @@ bool HMol::canbePaste()
     else
     {
         //replace all the comma with whitespace
-        Text=Text.replace(QRegExp(",")," ");
+        Text=Text.replace(RE_COMMA," ");
 
         // QMessageBox::information(0, "Warning",Text);
 
@@ -3708,7 +3712,7 @@ bool HMol::canbePaste()
         unsigned int i, size=0;
         if (Lines.size()==5)
         {
-            ls = Lines[0].trimmed().split(QRegExp("\\s+"));
+            ls = Lines[0].trimmed().split(RE_WHITESPACE);
 
             i=0;
             data="";
@@ -3825,7 +3829,7 @@ bool HMol::canbePaste()
             single = Lines.at(i).trimmed();
 
             if ( single.size() < 4) continue;
-            ls = single.trimmed().split(QRegExp("\\s+"));
+            ls = single.trimmed().split(RE_WHITESPACE);
 
 
             if ( ls.size() < 4 || ls.size() > 5)
@@ -3906,7 +3910,7 @@ void HMol::pastefromClipboard()
 
         for(i=0;i<nAtoms;i++){
             line=lst[i].simplified();
-            satom=line.split(" ",QString::SkipEmptyParts);
+            satom=line.split(" ",Qt::SkipEmptyParts);
             if(satom.size()!=6) continue;
 
             if(isNumber(satom[0]))
@@ -3936,7 +3940,7 @@ void HMol::pastefromClipboard()
         {
             line=lst[i+j].simplified();
             //cout << line.toStdString().c_str()<<endl;
-            sbond=line.split(" ",QString::SkipEmptyParts);
+            sbond=line.split(" ",Qt::SkipEmptyParts);
             if (sbond.size()!=3) continue;
 
             beg=initNumAtoms+sbond[0].toInt();
@@ -3957,7 +3961,7 @@ void HMol::pastefromClipboard()
     else
     {
         //replace all the comma with whitespace
-        Text=Text.replace(QRegExp(",")," ");
+        Text=Text.replace(RE_COMMA," ");
 
         // QMessageBox::information(0, "Warning",Text);
 
@@ -3971,7 +3975,7 @@ void HMol::pastefromClipboard()
         uint i, size=0;
         if (Lines.size()==1)
         {
-            ls = Lines[0].trimmed().split(QRegExp("\\s+"));
+            ls = Lines[0].trimmed().split(RE_WHITESPACE);
 
             i=0;
             data="";
@@ -4083,7 +4087,7 @@ void HMol::pastefromClipboard()
             single = Lines.at(i).trimmed();
 
             if ( single.size() < 4) continue;
-            ls = single.trimmed().split(QRegExp("\\s+"));
+            ls = single.trimmed().split(RE_WHITESPACE);
 
 
             if ( ls.size() < 4 || ls.size() > 5)
@@ -4151,7 +4155,7 @@ QString HMol::getShift(QString data)
     QStringList lst=data.split("\n"),single;
 
     line=lst[0].simplified();
-    single=line.split(" ",QString::SkipEmptyParts);
+    single=line.split(" ",Qt::SkipEmptyParts);
     Minxyzfromclip.SetX(single[1].toDouble());
     Minxyzfromclip.SetY(single[2].toDouble());
     Minxyzfromclip.SetZ(single[3].toDouble());
@@ -4161,7 +4165,7 @@ QString HMol::getShift(QString data)
         {
             line=lst[i].simplified();
             if (line.size() < 2) continue;
-            single=line.split(" ",QString::SkipEmptyParts);
+            single=line.split(" ",Qt::SkipEmptyParts);
             if (single.size()!=4) continue;
 
             x=single[1].toDouble();
@@ -4192,7 +4196,7 @@ QString HMol::getShift(QString data)
     {
         line=lst[i].simplified();
         if (line.size() < 2) continue;
-        single=line.split(" ",QString::SkipEmptyParts);
+        single=line.split(" ",Qt::SkipEmptyParts);
         if (single.size()!=4) continue;
 
         atomLabel =single[0];
@@ -4220,7 +4224,7 @@ QString HMol::parseGaussin09Summary(QString Text)
      */
     QString all="";
     Text=Text.simplified();
-    Text=Text.remove(QRegExp("\\s+"));
+    Text=Text.remove(RE_WHITESPACE);
     QStringList Lines = Text.split("\n");
     for (uint i=0; i < Lines.size(); i++)
         all+=Lines.at(i).trimmed();
@@ -4250,7 +4254,7 @@ QString HMol::parseGaussin09Summary(QString Text)
         if (single.startsWith("Version") ) break;
 
         //cout << single.toStdString();
-        ls = single.split(QRegExp(","));
+        ls = single.split(RE_COMMA);
 
         if (ls.size() != 5) continue;
 

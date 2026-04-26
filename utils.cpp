@@ -3,6 +3,7 @@
 #include <QProcess>
 #include <QPainter>
 #include <QPainterPath>
+#include <QRandomGenerator>
 
 const float Pi = 3.141592654f;
 
@@ -49,7 +50,7 @@ QImage star(const QSize& size)
 
 double random(int low, int high)
 {
-    double f = (double)qrand() / RAND_MAX;
+    double f = (double)QRandomGenerator::global()->generate() / QRandomGenerator::global()->max();
     return f * (high - low) + low;
 }
 

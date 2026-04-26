@@ -6,12 +6,14 @@
 #include <vector>
 #include <QMap>
 
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkDataSet.h>
 #include <vtkClipPolyData.h>
 #include <vtkPlane.h>
+
+#include "vtkbool/vtkPolyDataBooleanFilter.h"
 
 #include <vtkImplicitPlaneWidget2.h>
 #include <vtkImplicitPlaneRepresentation.h>
@@ -28,7 +30,7 @@
 #include <vtkStripper.h>
 #include <vtkFeatureEdges.h>
 #include <vtkRegularPolygonSource.h>
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <QVTKOpenGLWindow.h>
 #include <vtkDelaunay2D.h>
 #include <vtkLookupTable.h>
@@ -42,26 +44,21 @@
 #include <vtkInteractorStyleTrackballActor.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkProp3DCollection.h>
-
-#include "vtkbool/vtkPolyDataBooleanFilter.h"
-
-#include "Mol.h"
-#include "math/vector3.h"
 
 //#include "mouseEventInteractorStyle.h"
-
 
 #include <QVTKInteractor.h>
 #include "InteractorView3d.h"
 
 using namespace std;
-class HMol ;
+class HMol;
 class MainWindow;
-class templateMol;
-class TemplateView3d;
 class EHMO;
 class HMO;
+class templateMol;
+class TemplateView3d;
+
+#include "Mol.h"
 
 
 
@@ -524,6 +521,7 @@ public:
    void setLobeSmooth () {isLobeMesh=false;}
    void setMOVisible () {isMOVisible=true;}
    void setMOInvisible() {isMOVisible=false;}
+   void setMOVisible(bool v) {isMOVisible=v;}
 
 
    void setNegLobeVisible()  {isNegLobeVisible=true;}

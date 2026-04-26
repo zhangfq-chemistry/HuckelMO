@@ -476,12 +476,10 @@ public:
 
 
 
-
     uint NumBonds() {return bondList.size();}
     uint NumAtoms() {return atomList.size();}
     void displayBonds();
     void displayAtoms();
-
 
 
     QString getAtomSymbol (uint id) {return atomList[id]->Symbol();}

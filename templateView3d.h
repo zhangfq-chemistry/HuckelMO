@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QColor>
 
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkDataSet.h>
@@ -26,7 +26,7 @@
 #include <vtkStripper.h>
 #include <vtkFeatureEdges.h>
 #include <vtkRegularPolygonSource.h>
-#include <QVTKOpenGLWidget.h>
+#include <QVTKOpenGLNativeWidget.h>
 #include <QVTKOpenGLWindow.h>
 #include <vtkDelaunay2D.h>
 #include <vtkLookupTable.h>
