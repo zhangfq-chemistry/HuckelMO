@@ -174,6 +174,7 @@ HuckelTextForm::HuckelTextForm(QString title, QWidget *parent) :    QDialog(pare
     runShellProcess=nullptr;
     //ehmo=nullptr;
     isTightBinding=false;
+    isSymmetry=true;
 }
 
 
@@ -266,7 +267,12 @@ void HuckelTextForm::initialExtendedHuckel()
 
     appendText(ehmo->displayBasisSets());
     appendText("------------------------------------\n");
-    qDebug() << "DEBUG: initialExtendedHuckel() completed";
+}
+
+
+void HuckelTextForm::on_checkBox_symmetry_clicked(bool checked)
+{
+    isSymmetry = checked;
 }
 
 
@@ -277,26 +283,48 @@ void HuckelTextForm::runEHMO()
     setWindowTitle("EHMO");
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    ehmo->runEHMO();
+    if (isSymmetry) {
+        try {
+            ehmo->runEHMO_Symmetry();
+        } catch (const EHMOException &e) {
+            appendText(QString("Symmetry EHMO failed: %1\nFalling back to standard EHMO\n").arg(e.what()));
+            ehmo->runEHMO();
+        }
+    } else {
+        ehmo->runEHMO();
+    }
     QApplication::restoreOverrideCursor();
 
     //display information
-    //vector < double > huckelEigValues;
-    //vector < vector < double > > huckelEigVecs;
+    QString single="\nOrbital Energy (eV):\n";
 
-    QString single="\nOrbital Energy(au):\n";
-    QString s;
-    for (size_t i=0;i<ehmo->huckelEigValues.size();i++) {
-         s = QString("%1   %2\n").arg(i+1, 3).arg(ehmo->huckelEigValues[i], 10, 'f', 4);
-         single+=s;
+    if (isSymmetry && ehmo->moIrrepLabels.size() == ehmo->huckelEigValues.size()) {
+        single += "  #   Energy        Irrep\n";
+        single += "--------------------------\n";
+        for (size_t i=0;i<ehmo->huckelEigValues.size();i++) {
+            QString s = QString("%1   %2  %3\n")
+                        .arg(i+1, 3)
+                        .arg(ehmo->huckelEigValues[i], 10, 'f', 4)
+                        .arg(ehmo->moIrrepLabels[i]);
+            single+=s;
+        }
+    } else {
+        QString s;
+        for (size_t i=0;i<ehmo->huckelEigValues.size();i++) {
+             s = QString("%1   %2\n").arg(i+1, 3).arg(ehmo->huckelEigValues[i], 10, 'f', 4);
+             single+=s;
+        }
     }
     appendText(single+"\n");
+
+    if (ehmo->symPointGroup.size() > 0)
+        appendText(QString("Point Group: %1\n").arg(ehmo->symPointGroup));
 
     appendText("\nCalculated MO's coeff:\n");
     for (size_t i=0;i<ehmo->huckelEigVecs.size();i++) {
          single="";
          for (size_t j=0;j<ehmo->huckelEigVecs.size();j++) {
-            s = QString("%1").arg(ehmo->huckelEigVecs[i][j], 8, 'f', 4);
+            auto s = QString("%1").arg(ehmo->huckelEigVecs[i][j], 8, 'f', 4);
             single+=s;
          }
          appendText(single+"\n");

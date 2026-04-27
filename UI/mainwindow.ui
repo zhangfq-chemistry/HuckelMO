@@ -429,9 +429,16 @@
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QTableView" name="huckelEnergyView"/>
-         </item>
+<item>
+           <widget class="QTableView" name="huckelEnergyView">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>1</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>

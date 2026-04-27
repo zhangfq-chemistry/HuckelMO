@@ -633,11 +633,11 @@ void View3D::clearAll()
     removeAllActors();
 
     releaseAtomLabelActors();
-    //void releaseInteractorPickedActor();
     releaseSelectedAtomActors();
     releaseSelectedBondActors();
     releaseSelectedRingActors();
 
+    isHuckel = isExtendedHuckel = isXTB = false;
 }
 
 
@@ -4353,6 +4353,10 @@ void View3D::paste()
 
 void View3D::renderOrbitalAO()
 {
+    if (!isHuckel && !isExtendedHuckel) return;
+    if (isHuckel && !hmo) return;
+    if (isExtendedHuckel && !ehmo) return;
+
     if (isPosLobeVisible)
     {
         double colour1[3];
@@ -4380,9 +4384,9 @@ void View3D::renderOrbitalAO()
         //cout << n <<" inside enderOrbitalAO()"<<endl;
 
         if(isHuckel)
-            mapper_pos->SetInputData(hmo->ylmData);
+            mapper_pos->SetInputData(hmo ? hmo->ylmData : nullptr);
         if(isExtendedHuckel)
-            mapper_pos->SetInputData(ehmo->ylmData);
+            mapper_pos->SetInputData(ehmo ? ehmo->ylmData : nullptr);
 
 
         actor_pos->SetMapper(mapper_pos);
@@ -4413,9 +4417,9 @@ void View3D::renderOrbitalAO()
         auto mapper_neg = vtkPolyDataMapper::New();
 
         if(isHuckel)
-            mapper_neg->SetInputData(hmo->ylmData1);
+            mapper_neg->SetInputData(hmo ? hmo->ylmData1 : nullptr);
         if(isExtendedHuckel)
-            mapper_neg->SetInputData(ehmo->ylmData1);
+            mapper_neg->SetInputData(ehmo ? ehmo->ylmData1 : nullptr);
 
 
         actor_neg->GetProperty()->SetColor(colour2);
@@ -4453,9 +4457,9 @@ void View3D::renderNode()
     auto mapper_node = vtkPolyDataMapper::New();
 
     if(isHuckel)
-        mapper_node->SetInputData(hmo->pDataNode);
-    if(isExtendedHuckel)
-        mapper_node->SetInputData(ehmo->pDataNode);
+mapper_node->SetInputData(hmo ? hmo->pDataNode : nullptr);
+        if(isExtendedHuckel)
+            mapper_node->SetInputData(ehmo ? ehmo->pDataNode : nullptr);
 
 
     actor_node->GetProperty()->SetColor(nodecolor[0],nodecolor[1],nodecolor[2]);
@@ -4481,20 +4485,29 @@ void View3D::renderNode()
 void View3D::renderOrbital()
 {
     if (!isMOVisible) return;
+    qDebug() << "renderOrbital: isMOVisible=true";
 
     if (mol==nullptr)  return;
+    qDebug() << "renderOrbital: mol not null, atoms=" << mol->NumAtoms();
 
     if (mol->NumAtoms()<1) return;
 
+    qDebug() << "renderOrbital: isHuckel=" << isHuckel << " isExtendedHuckel=" << isExtendedHuckel;
 
     if(isExtendedHuckel==false && isHuckel==false)
         return;
 
     if(isHuckel)
-        if (!hmo->isSurfaceOK()) return;
+        if (!hmo || !hmo->isSurfaceOK()) {
+            qDebug() << "renderOrbital: hmo not ok, returning";
+            return;
+        }
 
     if(isExtendedHuckel)
-        if (!ehmo->isSurfaceOK()) return;
+        if (!ehmo || !ehmo->isSurfaceOK()) {
+            qDebug() << "renderOrbital: ehmo not ok, returning";
+            return;
+        }
 
 
 
@@ -4528,9 +4541,9 @@ void View3D::renderOrbital()
         }
 
         if(isHuckel)
-            mapper_pos->SetInputData(hmo->pData);
+            mapper_pos->SetInputData(hmo ? hmo->pData : nullptr);
         if(isExtendedHuckel)
-            mapper_pos->SetInputData(ehmo->pData);
+            mapper_pos->SetInputData(ehmo ? ehmo->pData : nullptr);
 
 
         actor_pos->SetMapper(mapper_pos);
@@ -4563,9 +4576,9 @@ void View3D::renderOrbital()
         auto mapper_neg = vtkPolyDataMapper::New();
 
         if(isHuckel)
-            mapper_neg->SetInputData(hmo->pData1);
+            mapper_neg->SetInputData(hmo ? hmo->pData1 : nullptr);
         if(isExtendedHuckel)
-            mapper_neg->SetInputData(ehmo->pData1);
+            mapper_neg->SetInputData(ehmo ? ehmo->pData1 : nullptr);
 
         actor_neg->GetProperty()->SetColor(colour2);
         actor_neg->SetPickable(false);

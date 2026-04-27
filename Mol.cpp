@@ -5397,5 +5397,54 @@ void HMol::orient2PlaneXOY()
 
 }
 
+void HMol::updateRingPositions()
+{
+    for (uint k = 0; k < ringList.size(); k++) {
+        HRing *ring = ringList[k];
+        if (!ring) continue;
+
+        vector3 center(0, 0, 0);
+        for (size_t i = 0; i < ring->atomIdList.size(); i++) {
+            uint atomId = ring->atomIdList[i];
+            if (atomId < atomList.size()) {
+                center += getAtomPosbyIndex(atomId);
+            }
+        }
+        if (!ring->atomIdList.empty()) {
+            center /= static_cast<double>(ring->atomIdList.size());
+        }
+        ring->center.Set(center.x(), center.y(), center.z());
+
+        if (ring->atomIdList.size() >= 3) {
+            vector3 v1 = getAtomPosbyIndex(ring->atomIdList[1]) - getAtomPosbyIndex(ring->atomIdList[0]);
+            vector3 v2 = getAtomPosbyIndex(ring->atomIdList[2]) - getAtomPosbyIndex(ring->atomIdList[0]);
+            ring->norm = cross(v1, v2).normalize();
+        }
+    }
+
+    for (uint k = 0; k < arcList.size(); k++) {
+        HArc *arc = arcList[k];
+        if (!arc) continue;
+
+        vector3 center(0, 0, 0);
+        for (size_t i = 0; i < arc->atomIdList.size(); i++) {
+            uint atomId = arc->atomIdList[i];
+            if (atomId < atomList.size()) {
+                center += getAtomPosbyIndex(atomId);
+            }
+        }
+        if (!arc->atomIdList.empty()) {
+            center /= static_cast<double>(arc->atomIdList.size());
+        }
+        arc->center.Set(center.x(), center.y(), center.z());
+
+        if (arc->atomIdList.size() >= 3) {
+            vector3 v1 = getAtomPosbyIndex(arc->atomIdList[1]) - getAtomPosbyIndex(arc->atomIdList[0]);
+            vector3 v2 = getAtomPosbyIndex(arc->atomIdList[2]) - getAtomPosbyIndex(arc->atomIdList[0]);
+            arc->norm = cross(v1, v2).normalize();
+        }
+    }
+}
+
 
 

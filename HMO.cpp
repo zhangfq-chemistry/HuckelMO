@@ -7,20 +7,16 @@
 #include <vtkFlyingEdges3D.h>
 
 #include <iostream>
-
-#include <iostream>
 #include <fstream>
 #include <iomanip>
+
 #include <BaseMathOperators.h>
 #include <MathOperators.h>
 #include <Complex.h>
 #include <Matrix.h>
 
-#include <armadillo>
-
 
 using namespace std;
-using namespace arma;
 using namespace hmma;
 
 

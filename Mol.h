@@ -614,6 +614,7 @@ public:
     uint NumRings() {return ringList.size();}
     HRing * getRingbyId(uint id) {return ringList[id];}
     HRing * getRingbyIndex(uint id) {return ringList[id];}
+    void updateRingPositions();
 
 
     bool canbePaste();

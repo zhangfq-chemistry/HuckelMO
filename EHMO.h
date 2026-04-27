@@ -7,8 +7,12 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <cstring>
 #include "math/vector3.h"
 #include "Mol.h"
+
+#include "libmsym/msym_msym.h"
 
 class EHMOException : public std::runtime_error {
 public:
@@ -151,7 +155,22 @@ public:
     //-----------------------------------------------------------------------------------//
     int  KroneckerDelta(int i,int j);
 
+    // Symmetry-aware EHMO
+    bool detectPointGroup();
+    void runEHMO_Symmetry();
+    bool verifySymmetry();
+    void alignMoleculeToStandardOrientation();
 
+    struct IrrepInfo {
+        int speciesIndex;
+        QString name;
+        int dimension;
+        int blockSize;
+        int blockStart;
+    };
+    QVector<IrrepInfo> irrepInfos;
+    QString symPointGroup;
+    QVector<QString> moIrrepLabels;
 
 private:
     int idxActiveMO;

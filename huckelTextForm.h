@@ -76,6 +76,8 @@ private slots:
 
    void on_lineEdit_path_textChanged(const QString &arg1);
 
+   void on_checkBox_symmetry_clicked(bool checked);
+
 private:
     EHMO * ehmo;
     HMO * hmo;
@@ -90,6 +92,7 @@ private:
     QProcess * runShellProcess;
     QString   log,commandXTB,executePath;
     bool isTightBinding;
+    bool isSymmetry;
 
 
     //GiNaC::matrix Huckel;

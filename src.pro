@@ -3,39 +3,45 @@ QT     += core gui widgets charts
 requires(qtConfig(filedialog))
 requires(qtConfig(treeview))
 
-
 DEFINES+=DMS_INCLUDE_SOURCE
 
-MKLDIR = $$(MKLROOT)
+
+
+# Enable OpenMP support
+QMAKE_CXXFLAGS += -fopenmp
+QMAKE_LFLAGS += -fopenmp
+
+
+LIBS += -lgomp
 
 
 LIBS += -L/usr/local/lib \
     -L/opt/Qt/6.10.1/gcc_64/lib \
     -L/home/zhangfq/.local/lib \
-    -lQtColorWidgets \
     -lopenbabel \
     -lgmp \
     -lmpfr \
     -lmpc \
+    -lmpi \
 
 
 INCLUDEPATH += . \
-    /home/zhangfq/sxnu/QtColorWidgets \
-    math/newMatrix \
+    color_widgets \
+    libmsym \
+    tiger \
+    /usr/local/include/vtk-9.6 \
+    /usr/local/include/openbabel3 \
+    /usr/local/include \
+    /home/zhangfq/.local/include \
+
+
+
+DEPENDPATH  += \
+    tiger \
     /usr/local/include/vtk-9.6 \
     /usr/local/include/openbabel3 \
     /usr/local/include \
     /home/zhangfq/.local/include
-
-
-DEPENDPATH  += . \
-    math/newMatrix \
-    /usr/local/include/vtk-9.6 \
-    /usr/local/include/openbabel3 \
-    /usr/local/include \
-    /home/zhangfq/.local/include
-
-
 
 
 
@@ -174,11 +180,11 @@ CONFIG(win32, win32|macx){
     LIBS += -L$${VTK_LIB_DIR} $${VTK_LIBS}
 }
 else{ #LINUX
-#VTK 9.6 configuration
-VTK_INCLUDE_DIR = /usr/local/include/vtk-9.6
-VTK_LIB_DIR = /usr/local/lib
-VTK_LIB_VER = 9.6
-VTK_LIB_PREFIX = $${VTK_LIB_VER}
+    #VTK 9.6 configuration
+    VTK_INCLUDE_DIR = /usr/local/include/vtk-9.6
+    VTK_LIB_DIR = /usr/local/lib
+    VTK_LIB_VER = 9.6
+    VTK_LIB_PREFIX = $${VTK_LIB_VER}
     VTK_LIB_NAME =  vtkChartsCore\
                     vtkCommonColor\
                     vtkCommonComputationalGeometry\
@@ -314,9 +320,6 @@ HEADERS       += mainwindow.h \
     Mol.h \
     aboutDialog.h \
     huckelTextForm.h \
-    math/symmetry.h \
-    math/vector3.h \
-    math/matrix3x3.h \
     textEditor.h \
     View3D.h \
     utils.h \
@@ -330,15 +333,6 @@ HEADERS       += mainwindow.h \
     ringTemplate.h \
     periodicTable.h \
     eigenMath.h \
-    vtkbool/AABB.h \
-    vtkbool/Decomposer.h \
-    vtkbool/Merger.h \
-    vtkbool/RmTrivials.h \
-    vtkbool/Tools.h \
-    vtkbool/Utilities.h \
-    vtkbool/VisPoly.h \
-    vtkbool/vtkPolyDataBooleanFilter.h \
-    vtkbool/vtkPolyDataContactFilter.h \
     AreaPicker.h \
     codeEditor.h \
     atomProperty.h \
@@ -350,8 +344,19 @@ HEADERS       += mainwindow.h \
     EHMO.h \
     functionals.h \
     HMO.h \
+    vtkbool/AABB.h \
+    vtkbool/Decomposer.h \
+    vtkbool/Merger.h \
+    vtkbool/RmTrivials.h \
+    vtkbool/Tools.h \
+    vtkbool/Utilities.h \
+    vtkbool/VisPoly.h \
+    vtkbool/vtkPolyDataBooleanFilter.h \
+    vtkbool/vtkPolyDataContactFilter.h \
     polyfactor/lll_gs.h \
     polyfactor/lll_functions.h \
+    math/vector3.h \
+    math/matrix3x3.h \
 
 
 
@@ -360,9 +365,6 @@ SOURCES       += main.cpp \
     aboutDialog.cpp \
     huckelTextForm.cpp \
     mainwindow.cpp \
-    math/matrix3x3.cpp \
-    math/symmetry.cpp \
-    math/vector3.cpp \
     textEditor.cpp \
     View3D.cpp \
     utils.cpp \
@@ -376,15 +378,6 @@ SOURCES       += main.cpp \
     ringTemplate.cpp \
     periodicTable.cpp \
     eigenMath.cpp \
-    vtkbool/Decomposer.cpp \
-    vtkbool/Merger.cpp \
-    vtkbool/PyInit.cxx \
-    vtkbool/RmTrivials.cpp \
-    vtkbool/Tools.cpp \
-    vtkbool/Utilities.cpp \
-    vtkbool/VisPoly.cpp \
-    vtkbool/vtkPolyDataBooleanFilter.cpp \
-    vtkbool/vtkPolyDataContactFilter.cpp \
     AreaPicker.cpp \
     codeEditor.cpp \
     atomProperty.cpp \
@@ -396,10 +389,35 @@ SOURCES       += main.cpp \
     EHMO.cpp \
     functionals.cpp \
     HMO.cpp \
+    libmsym/msym_basis_function.c \
+    libmsym/msym_character_table.c \
+    libmsym/msym_context.c \
+    libmsym/msym_debug.c \
+    libmsym/msym_elements.c \
+    libmsym/msym_equivalence_set.c \
+    libmsym/msym_geometry.c \
+    libmsym/msym_linalg.c \
+    libmsym/msym_msym.c \
+    libmsym/msym_msym_error.c \
+    libmsym/msym_permutation.c \
+    libmsym/msym_point_group.c \
+    libmsym/msym_rsh.c \
+    libmsym/msym_subspace.c \
+    libmsym/msym_symmetrize.c \
+    libmsym/msym_symmetry.c \
+    libmsym/msym_symop.c \
+    math/matrix3x3.cpp \
+    math/vector3.cpp \
+    vtkbool/Decomposer.cpp \
+    vtkbool/Merger.cpp \
+    vtkbool/PyInit.cxx \
+    vtkbool/RmTrivials.cpp \
+    vtkbool/Tools.cpp \
+    vtkbool/Utilities.cpp \
+    vtkbool/VisPoly.cpp \
+    vtkbool/vtkPolyDataBooleanFilter.cpp \
+    vtkbool/vtkPolyDataContactFilter.cpp \
 
-
-
-#https://github.com/geodavic/poly_factor.git
 
 
 FORMS += \
@@ -414,11 +432,55 @@ FORMS += \
     UI/dialogAtom.ui \
     UI/dialogRing.ui \
     UI/huckelTextForm.ui \
-    UI/MOProperty.ui
+    UI/MOProperty.ui \
 
 
 
 
-RESOURCES +=  hmo.qrc
+RESOURCES +=  hmo.qrc color_widgets.qrc
+
+SOURCES += \
+    color_widgets/abstract_widget_list.cpp \
+    color_widgets/bound_color_selector.cpp \
+    color_widgets/color_2d_slider.cpp \
+    color_widgets/color_delegate.cpp \
+    color_widgets/color_dialog.cpp \
+    color_widgets/color_line_edit.cpp \
+    color_widgets/color_list_widget.cpp \
+    color_widgets/color_names.cpp \
+    color_widgets/color_palette.cpp \
+    color_widgets/color_palette_model.cpp \
+    color_widgets/color_palette_widget.cpp \
+    color_widgets/color_preview.cpp \
+    color_widgets/color_selector.cpp \
+    color_widgets/color_utils.cpp \
+    color_widgets/color_wheel.cpp \
+    color_widgets/gradient_slider.cpp \
+    color_widgets/hue_slider.cpp \
+    color_widgets/swatch.cpp \
+
+HEADERS += \
+    color_widgets/abstract_widget_list.hpp \
+    color_widgets/bound_color_selector.hpp \
+    color_widgets/color_2d_slider.hpp \
+    color_widgets/color_delegate.hpp \
+    color_widgets/color_dialog.hpp \
+    color_widgets/color_line_edit.hpp \
+    color_widgets/color_list_widget.hpp \
+    color_widgets/color_names.hpp \
+    color_widgets/color_palette.hpp \
+    color_widgets/color_palette_model.hpp \
+    color_widgets/color_palette_widget.hpp \
+    color_widgets/color_preview.hpp \
+    color_widgets/color_selector.hpp \
+    color_widgets/color_utils.hpp \
+    color_widgets/color_wheel.hpp \
+    color_widgets/gradient_slider.hpp \
+    color_widgets/hue_slider.hpp \
+    color_widgets/swatch.hpp \
+
+FORMS += \
+    color_widgets/color_dialog.ui \
+    color_widgets/color_palette_widget.ui
 
 

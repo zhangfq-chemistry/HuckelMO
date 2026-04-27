@@ -105,7 +105,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
-    ~MainWindow() {}
+    ~MainWindow() { if(ehmo) delete ehmo; }
 
      void updateExtendedHuckelMOs();
      void updateHuckelMOs();

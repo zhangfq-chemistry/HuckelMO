@@ -67,22 +67,32 @@
     </widget>
    </item>
    <item row="1" column="3">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Excute Path</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="4">
-    <widget class="QLineEdit" name="lineEdit_commands"/>
-   </item>
-   <item row="2" column="1">
-    <widget class="QSpinBox" name="spinBox_mulplicity"/>
-   </item>
-   <item row="1" column="4">
-    <widget class="QLineEdit" name="lineEdit_path"/>
-   </item>
-  </layout>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Excute Path</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QLineEdit" name="lineEdit_commands"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QSpinBox" name="spinBox_mulplicity"/>
+    </item>
+    <item row="1" column="4">
+     <widget class="QLineEdit" name="lineEdit_path"/>
+    </item>
+    <item row="2" column="6">
+     <widget class="QCheckBox" name="checkBox_symmetry">
+      <property name="text">
+       <string>Symmetry</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
  </widget>
  <resources/>
  <connections/>
