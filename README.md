@@ -15,6 +15,9 @@
 <img width="3715" height="2096" alt="hmo-20" src="https://github.com/user-attachments/assets/8d7c6a15-541d-4c86-91e3-cb4791a1b55f" />
 <img width="3715" height="2096" alt="hmo-21" src="https://github.com/user-attachments/assets/488e8035-86a3-4dc2-9e81-069779c53f8a" />
 <img width="3715" height="2096" alt="hmo-22" src="https://github.com/user-attachments/assets/9513e40f-e2e9-48ec-bba0-84a6f98d440d" />
-<img width="3712" height="2090" alt="hmo-23" src="https://github.com/user-attachments/assets/a960014b-9850-4e6c-9680-d95db5337bb0" />
+Re-Re/Sigam-orbital
 <img width="3712" height="2090" alt="hmo-24" src="https://github.com/user-attachments/assets/979d0ce4-ef54-4bcb-b3cc-cdb4a258508b" />
+Re-Re/Pi-orbital
+<img width="3712" height="2090" alt="hmo-23" src="https://github.com/user-attachments/assets/a960014b-9850-4e6c-9680-d95db5337bb0" />
+Re-Re/Delta-orbital
 <img width="3712" height="2090" alt="hmo-25" src="https://github.com/user-attachments/assets/bc177f20-5853-4caf-8d07-0960d4d0fbeb" />
