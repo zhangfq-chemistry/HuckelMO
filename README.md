@@ -1,7 +1,7 @@
 Hückel molecular orbital Viewer,支持
 (1) 平面分子构建
 (2) HMO行列式/因式分解
-(3) HMO轨道构建及显示
+(3) HMO轨道构建及显示(球形C60)
 (4) 扩展HMO(EHMO)计算及轨道显示,包含过渡金属
 
 <img width="3715" height="2096" alt="hmo-1" src="https://github.com/user-attachments/assets/c79da8cc-da97-45c5-b492-f9f13b395069" />
