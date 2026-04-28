@@ -12,12 +12,21 @@
 <img width="3715" height="2096" alt="hmo-16" src="https://github.com/user-attachments/assets/d58159ff-8aaf-417a-a45b-7bfc85343fba" />
 <img width="3715" height="2096" alt="hmo-17" src="https://github.com/user-attachments/assets/92ddda39-88b8-4ef4-91c7-cabe1186fd6c" />
 <img width="3715" height="2096" alt="hmo-19" src="https://github.com/user-attachments/assets/ffddd636-89bd-4012-b45f-a79572b80422" />
+
+S-orbital of C60
 <img width="3715" height="2096" alt="hmo-20" src="https://github.com/user-attachments/assets/8d7c6a15-541d-4c86-91e3-cb4791a1b55f" />
+
+P-orbital of C60
 <img width="3715" height="2096" alt="hmo-21" src="https://github.com/user-attachments/assets/488e8035-86a3-4dc2-9e81-069779c53f8a" />
+
+D-orbotal of C60
 <img width="3715" height="2096" alt="hmo-22" src="https://github.com/user-attachments/assets/9513e40f-e2e9-48ec-bba0-84a6f98d440d" />
-Re-Re/Sigam-orbital
+
+Re-Re/Sigma-orbital
 <img width="3712" height="2090" alt="hmo-24" src="https://github.com/user-attachments/assets/979d0ce4-ef54-4bcb-b3cc-cdb4a258508b" />
+
 Re-Re/Pi-orbital
 <img width="3712" height="2090" alt="hmo-23" src="https://github.com/user-attachments/assets/a960014b-9850-4e6c-9680-d95db5337bb0" />
+
 Re-Re/Delta-orbital
 <img width="3712" height="2090" alt="hmo-25" src="https://github.com/user-attachments/assets/bc177f20-5853-4caf-8d07-0960d4d0fbeb" />
